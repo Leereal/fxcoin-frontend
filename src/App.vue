@@ -1,24 +1,57 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <template v-if="!currentUser">
+      <div id="nav">
+        <FlashMessage :position="'bottom right'"></FlashMessage>
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link> |
+        <router-link to="/login">Login</router-link> |
+        <router-link to="/register">Register</router-link> 
+        <router-link to="/password-reset">Password Reset</router-link> 
+      </div>
+      <router-view />
+    </template>
+    <template v-else>     
+      <Header />
+      <Sidebar />
+      <router-view></router-view>
+      <Footer />
+    </template>
   </div>
 </template>
+<script>
+import Header from "./inc/Header.vue";
+import Sidebar from "./inc/Sidebar.vue";
+import Footer from "./inc/Footer.vue";
 
+export default {
+  components: {
+    Header,
+    Sidebar,
+    Footer,
+  },
+  computed: {
+    currentUser() {
+      return this.$store.getters.currentUser;
+      //console.log(currentUser);
+    },
+  },
+};
+</script>
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Nunito", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  
   color: #2c3e50;
+  font-size: 0.8rem;
+  line-height: 1.6;
 }
 
 #nav {
   padding: 30px;
+  text-align: center;
 }
 
 #nav a {

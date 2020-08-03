@@ -16,3 +16,6 @@ export default {
   }
 }
 </script>
+<style>
+text-align : center;
+</style>
