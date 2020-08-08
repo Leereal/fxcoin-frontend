@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Packages</h1>
+            <h1>My Payment Details</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -25,11 +25,11 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Packages</h3>
+          <h3 class="card-title">My Payment Details</h3>
 
           <div class="card-tools">
             <button
-              class="btn btn-primary btn-xs"
+              class="btn btn-primary btn-sm"
               data-toggle="modal"
               data-target="#addModal"
               type="button"
@@ -59,26 +59,23 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Daily Interest</th>
-                <th scope="col">Minimum</th>
-                <th scope="col">Period</th>
-                <th scope="col">Total Interest</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Account Number</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="plan in plans" v-bind:key="plan.id">
-                <th scope="row">{{ plan.id }}</th>
-                <td>{{ plan.name }}</td>
-                <td>{{ plan.daily_interest }}</td>
-                <td>{{ plan.minimum }}</td>
-                <td>{{ plan.period }}</td>
-                <td>{{ plan.interest }}</td>
+              <tr
+                v-for="payment_detail in payment_details"
+                v-bind:key="payment_detail.id"
+              >
+                <th scope="row">{{ payment_detail.id }}</th>
+                <td>{{ payment_detail.payment_method }}</td>
+                <td>{{ payment_detail.account_number }}</td>
                 <td>
                   <span data-toggle="modal" data-target="#addModal">
                     <button
-                      @click="editValue(plan)"
+                      @click="editValue(payment_detail)"
                       class="btn btn-success btn-sm rounded-0"
                       type="button"
                       data-toggle="tooltip"
@@ -90,7 +87,7 @@
                     </button>
                   </span>
                   <button
-                    @click="deleteValue(plan.id)"
+                    @click="deleteValue(payment_detail.id)"
                     class="btn btn-danger btn-sm rounded-0"
                     type="button"
                     data-toggle="tooltip"
@@ -158,7 +155,7 @@
         <div class="modal-content bg-primary">
           <div class="modal-header">
             <h5 class="modal-title" id="addModalTitle">
-              Add Package
+              Add Payment Details
             </h5>
             <button
               type="button"
@@ -169,51 +166,42 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form @submit.prevent="addValue">
+          <form @submit.prevent="addValue" id="addValue">
             <div class="modal-body">
               <div class="form-group">
-                <label for="name">Name</label>
+                <label for="payment_method">Payment Method</label>
+                <select
+                  class="form-control"
+                  id="payment_method"
+                  v-model="form.payment_method_id"
+                  name="payment_method"
+                  :class="{
+                    'is-invalid': form.errors.has('payment_method_id'),
+                  }"
+                >
+                  <option value="">Select Payment Method</option>
+                  <option
+                    v-for="payment_method in payment_methods"
+                    v-bind:key="payment_method.id"
+                    :value="payment_method.id"
+                    >{{ payment_method.name }}</option
+                  >
+                </select>
+                <has-error :form="form" field="payment_method_id"></has-error>
+              </div>
+              <div class="form-group">
+                <label for="account_number">Account Number</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="name"
-                  name="name"
-                  placeholder="Name"
-                  v-model="form.name"
+                  id="account_number"
+                  name="account_number"
+                  v-model="form.account_number"
+                  :class="{
+                    'is-invalid': form.errors.has('account_number'),
+                  }"
                 />
-              </div>
-              <div class="form-group">
-                <label for="minimum">Minimum</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="minimum"
-                  name="minimum"
-                  placeholder="Minimum"
-                  v-model="form.minimum"
-                />
-              </div>
-              <div class="form-group">
-                <label for="daily_interest">Daily Interest</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="daily_interest"
-                  name="daily_interest"
-                  placeholder="Daily Interest"
-                  v-model="form.daily_interest"
-                />
-              </div>
-              <div class="form-group">
-                <label for="period">Period</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="period"
-                  name="period"
-                  placeholder="Period"
-                  v-model="form.period"
-                />
+                <has-error :form="form" field="account_number"></has-error>
               </div>
             </div>
 
@@ -243,32 +231,34 @@ export default {
     return {
       form: new Form({
         id: "",
-        name: "",
-        minimum: "",
-        daily_interest: "",
-        period: "",
+        payment_method: "",
+        account_number: "",
       }),
-      plans: [],
+      payment_details: [],
+      payment_methods: [],
+
+      pm_id: "",
       pagination: {},
       edit: false,
     };
   },
   created() {
     this.fetchValues(); //Calling function/method to output data after component created
+    this.fetchPM();
   },
   methods: {
     //---FetchValues Function--//
     fetchValues(page_url) {
       let vm = this;
-      page_url = page_url || axios.defaults.baseURL + "/api/package";
-      fetch(page_url) //calling the api url for packages data
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res.data);
-          this.plans = res.data; //sending data to plans array
-          vm.makePagination(res.meta, res.links);
+      axios
+        .get("/api/user-payment-details") //calling the api url for packages data
+        .then((response) => {
+          this.payment_details = response.data.data;
+          vm.makePagination(response.data.meta, response.data.links);
         })
-        .catch((err) => console.log(err));
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     //---End FetchValues Function--//
     //---Pagination Function--//
@@ -294,7 +284,7 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          fetch(axios.defaults.baseURL + "/api/package/" + id, {
+          fetch(axios.defaults.baseURL + "api/payment-detail/" + id, {
             method: "delete",
           })
             .then((res) => res.json())
@@ -319,10 +309,13 @@ export default {
       if (this.edit === false) {
         //Add Values
         this.form
-          .post("/api/package")
+          .post("/api/payment-detail")
           .then((data) => {
+            this.form.payment_method = "";
+            this.form.account_number = "";
             Swal.fire("Good job!", "You clicked the button!", "success");
             this.fetchValues();
+            $("#addModal").modal("hide");
           })
           .catch(
             Swal.fire({
@@ -338,12 +331,10 @@ export default {
         //Update Values
         this.form
 
-          .put("/api/package/" + this.form.id)
+          .put("/api/payment-detail/" + this.form.id)
           .then((data) => {
-            this.form.name = "";
-            this.form.minimum = "";
-            this.form.daily_interest = "";
-            this.form.period = "";
+            this.form.payment_method = "";
+            this.form.account_number = "";
             Swal.fire("Good job!", "Saved Successfully", "success");
             this.fetchValues();
           })
@@ -364,17 +355,20 @@ export default {
     editValue(form) {
       this.edit = true;
       this.form.id = form.id;
-      this.form.plan_id = form.id;
-      this.form.name = form.name;
-      this.form.minimum = form.minimum;
-      this.form.daily_interest = form.daily_interest;
-      this.form.period = form.period;
+      this.form.payment_method = form.payment_method;
+      this.form.account_number = form.account_number;
     },
     //---End EditValue Function--//
-  },
-  computed: {
-    currentUser() {
-      return this.$store.getters.currentUser;
+    //---FetchValues Function--//
+    fetchPM() {
+      axios
+        .get("/api/payment-method") //calling the api url for packages data
+        .then((response) => {
+          this.payment_methods = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
   },
 };

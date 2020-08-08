@@ -5,9 +5,17 @@ import Dashboard from '../components/Dashboard.vue';
 import Profile from '../components/Profile.vue';
 import Package from '../components/Package.vue';
 import PaymentMethod from '../components/PaymentMethod.vue';
+import MarketPlace from '../components/MarketPlace.vue';
 import Currency from '../components/Currency.vue';
 import PaymentDetail from '../components/PaymentDetail.vue';
+import UserPaymentDetail from '../components/UserPaymentDetail.vue';
 import ChangePassword from '../components/ChangePassword.vue';
+import PendingPayment from '../components/PendingPayment.vue';
+import Settings from '../components/Settings.vue';
+import Investment from '../components/Investment.vue';
+import Referral from '../components/Referral.vue';
+import Trade from '../components/Trade.vue';
+import Offer from '../components/Offer.vue';
 import Login from '../auth/Login.vue';
 import Register from '../auth/Register.vue';
 import PasswordReset from '../auth/PasswordReset.vue';
@@ -43,6 +51,12 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/market-place",
+    name: "market-place",
+    component: MarketPlace,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/packages",
     name: "packages",
     component: Package,
@@ -65,11 +79,47 @@ const routes = [
     name: "payment-details",
     component: PaymentDetail,
     meta: { requiresAuth: true },
-  },
+  },  
+  {
+    path: "/user-payment-details",
+    name: "user-payment-details",
+    component: UserPaymentDetail,
+    meta: { requiresAuth: true },
+  }, 
   {
     path: "/change-password",
     name: "change-password",
     component: ChangePassword,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Settings,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/offers",
+    name: "offers",
+    component: Offer,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/trade",
+    name: "trade",
+    component: Trade,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/investments",
+    name: "investments",
+    component: Investment,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/referrals",
+    name: "referrals",
+    component: Referral,
     meta: { requiresAuth: true },
   },
   {

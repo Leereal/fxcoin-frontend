@@ -44,45 +44,44 @@
             <router-link to="/dashboard" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt text-blue"></i>
               <p>
-                Dashboard                
-              </p>
-            </router-link>            
-          </li>
-          <li class="nav-item">
-            <router-link to="/profile" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Profile
-                <span class="right badge badge-danger">New</span>
+                Dashboard
               </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/packages" class="nav-link">
-              <i class="nav-icon fas fa-th text-pink"></i>
+            <router-link to="/investments" class="nav-link">
+              <i class=" nav-icon fas fa-wallet"></i>
               <p>
-                Packages
+                My Investments
               </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/payment-methods" class="nav-link">
-              <i class="nav-icon fas fa-credit-card text-green"></i>
+            <router-link to="/market-place" class="nav-link">
+              <i class=" nav-icon fas fa-funnel-dollar"></i>
               <p>
-                Payment Methods
+                Market Place
               </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/currencies" class="nav-link">
-              <i class="nav-icon fas fa-money-bill-wave-alt text-blue"></i>
+            <router-link to="/trade" class="nav-link">
+              <i class="nav-icon fas fa-shopping-cart text-blue"></i>
               <p>
-                Currencies
+                My Payments
               </p>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/payment-details" class="nav-link">
+            <router-link to="/offers" class="nav-link">
+              <i class="nav-icon fas fa-gift text-blue"></i>
+              <p>
+                Offers
+              </p>
+            </router-link>
+          </li>          
+          <li class="nav-item">
+            <router-link to="/user-payment-details" class="nav-link">
               <i class="nav-icon fas fa-info-circle text-blue"></i>
               <p>
                 Payment Details
@@ -97,11 +96,32 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul v-if="currentUser.id ==1" class="nav nav-treeview">
               <li class="nav-item">
-                <router-link to="/other" class="nav-link">
+                <router-link to="/settings" class="nav-link">
                   <i class="fa fa-circle nav-icon"></i>
                   <p>Settings</p>
+                </router-link>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/profile" class="nav-link">
+                  <i class="nav-icon fas fa-user"></i>
+                  <p>
+                    Profile
+                    <span class="right badge badge-danger">New</span>
+                  </p>
+                </router-link>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/referrals" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>
+                    Referrals                   
+                  </p>
                 </router-link>
               </li>
             </ul>
@@ -137,6 +157,4 @@ export default {
   },
 };
 </script>
-<style  scoped>
-
-</style>
+<style scoped></style>

@@ -52,10 +52,7 @@ export default {
             localStorage.removeItem("user");
             state.isLoggedIn = false;
             state.currentUser = null;
-        },
-        updateCustomers(state, payload) {
-            state.customers = payload;
-        }
+        },     
     },
     actions: {
         login(context) {

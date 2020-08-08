@@ -9,10 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import FlashMessage from '@smartweb/vue-flash-message'
 import Swal from 'sweetalert2'
 import { Form, HasError, AlertError } from 'vform'
-import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
 
-Vue.use(VueFilterDateParse);
-
+Vue.use(require('vue-moment'));
+import { Picker } from 'emoji-mart-vue';
 window.$ = window.jQuery = require('jquery');
 try {
   window.Popper = require('popper.js').default;
