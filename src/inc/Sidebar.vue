@@ -50,7 +50,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/investments" class="nav-link">
-              <i class=" nav-icon fas fa-wallet"></i>
+              <i class=" nav-icon fas fa-wallet text-purple"></i>
               <p>
                 My Investments
               </p>
@@ -58,7 +58,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/market-place" class="nav-link">
-              <i class=" nav-icon fas fa-funnel-dollar"></i>
+              <i class=" nav-icon fas fa-funnel-dollar text-yellow"></i>
               <p>
                 Market Place
               </p>
@@ -66,7 +66,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/trade" class="nav-link">
-              <i class="nav-icon fas fa-shopping-cart text-blue"></i>
+              <i class="nav-icon fas fa-shopping-cart text-green"></i>
               <p>
                 My Payments
               </p>
@@ -74,7 +74,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/offers" class="nav-link">
-              <i class="nav-icon fas fa-gift text-blue"></i>
+              <i class="nav-icon fas fa-gift text-red"></i>
               <p>
                 Offers
               </p>
@@ -90,7 +90,7 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="" class="nav-link">
-              <i class="nav-icon fa fa-cog"></i>
+              <i class="nav-icon fa fa-cog text-white"></i>
               <p>
                 Other
                 <i class="right fas fa-angle-left"></i>
@@ -121,6 +121,14 @@
                   <i class="nav-icon fas fa-users"></i>
                   <p>
                     Referrals                   
+                  </p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/referral-bonus" class="nav-link">
+                  <i class="nav-icon fas fa-gift"></i>
+                  <p>
+                    Referrals Bonus                   
                   </p>
                 </router-link>
               </li>

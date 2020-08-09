@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Trade Your Points</h1>
+            <h1>Points on Trade</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -238,7 +238,7 @@
         <!-- /.card-body -->
         <div class="card-footer">
           <p class="text-danger">
-            Please make sure you complete your payments within 12 hours to avoid
+            Please make sure you complete your approval within 12 hours to avoid
             being blocked
           </p>
         </div>
@@ -246,116 +246,7 @@
       </div>
       <!-- /.card -->
     </section>
-    <!-- /.content -->
-    <!-- Add Modal -->
-    <div
-      class="modal fade"
-      id="addModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="addModalTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content bg-primary">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addModalTitle">
-              Sell Your Points
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form @submit.prevent="addTrade" id="addValue">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="amount">Amount</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="amount"
-                  name="amount"
-                  v-model="tradeForm.amount"
-                  :class="{
-                    'is-invalid': tradeForm.errors.has('amount'),
-                  }"
-                />
-                <has-error :form="tradeForm" field="amount"></has-error>
-              </div>
-              <div class="form-group">
-                <label for="payment_detail_id">Payment Method</label>
-                <select
-                  class="form-control"
-                  id="payment_detail_id"
-                  v-model="tradeForm.payment_detail_id"
-                  name="payment_detail_id"
-                  :class="{
-                    'is-invalid': tradeForm.errors.has('payment_detail_id'),
-                  }"
-                >
-                  <option value="">Select Payment Method</option>
-                  <option
-                    v-for="payment_detail in payment_details"
-                    v-bind:key="payment_detail.id"
-                    :value="payment_detail.id"
-                    >{{ payment_detail.payment_method}}</option
-                  >
-                </select>
-                <has-error :form="tradeForm" field="payment_detail_id"></has-error>
-              </div>
-              <div class="form-group">
-                <textarea
-                  v-model="tradeForm.comment"
-                  class="form-control"
-                  rows="3"
-                  placeholder="Enter Your Comment..."
-                  style="margin-top: 0px; margin-bottom: 0px; height: 101px;"
-                  :class="{
-                    'is-invalid': tradeForm.errors.has('comment'),
-                  }"
-                ></textarea>
-                <has-error :form="tradeForm" field="comment"></has-error>
-              </div>
-              <div class="form-group">
-                <label for="reason">Reason</label>
-                <select
-                  class="form-control"
-                  id="reason"
-                  v-model="tradeForm.reason"
-                  name="reason"
-                  :class="{
-                    'is-invalid': tradeForm.errors.has('reason'),
-                  }"
-                >
-                  <option value="">Select Reason</option>
-                  <option value="Need Money">Need Money</option>
-                  <option value="Closing Account">Closing Account</option>
-                </select>
-                <has-error :form="tradeForm" field="reason"></has-error>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-outline-light"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-outline-light">
-                Trade Now
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <!-- /.content -->    
   </div>
   <!-- /.content-wrapper -->
 </template>

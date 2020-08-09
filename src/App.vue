@@ -1,13 +1,12 @@
 <template>
-  <div id="app">
+  <div class="wrapper hold-transition sidebar-mini layout-fixed">
     <template v-if="!currentUser">
       <div id="nav">
         <FlashMessage :position="'bottom right'"></FlashMessage>
         <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link> |
         <router-link to="/login">Login</router-link> |
-        <router-link to="/register">Register</router-link> 
-        <router-link to="/password-reset">Password Reset</router-link> 
+        <router-link to="/register">Register</router-link>
       </div>
       <router-view />
     </template>

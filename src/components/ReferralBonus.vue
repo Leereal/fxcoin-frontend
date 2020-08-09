@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>My Payment Details</h1>
+            <h1>Referral Bonus</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -53,22 +53,46 @@
               </div>
             </div>
           </div>
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">Date Joined</th>
-                <th scope="col">Cellphone</th>
-                <th scope="col">Username</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="referral in referrals" v-bind:key="referral.id"> 
-                <td>{{ referral.registration_date | moment("dddd, MMMM Do YYYY") }}</td>
-                <td>{{ referral.cellphone }}</td>
-                <td>{{ referral.username }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="card">
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Date Received</th>
+                    <th>Username</th>
+                    <th>Package</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="referral_bonus in referral_bonuses"
+                    :key="referral_bonus.id"
+                  >
+                    <td>
+                      {{
+                        referral_bonus.date_received
+                          | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                      }}
+                    </td>
+                    <td>{{ referral_bonus.referral }}</td>
+                    <td>{{ referral_bonus.package }}</td>
+                    <td>${{ referral_bonus.amount }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Date Received</th>
+                    <th>Username</th>
+                    <th>Package</th>
+                    <th>Amount</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
@@ -118,7 +142,7 @@
 export default {
   data() {
     return {
-      referrals: [],
+      referral_bonuses: [],
       pagination: {},
     };
   },
@@ -154,20 +178,6 @@ export default {
         alert("Oops, unable to copy");
       }
     },
-    //---FetchValues Function--//
-    fetchValues() {
-      let vm = this;
-      axios
-        .get("/api/referrals") //calling the api url for packages data
-        .then((response) => {
-          this.referrals = response.data.data;
-          vm.makePagination(response.data.meta, response.data.links);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-    //---End FetchValues Function--//
     //---Pagination Function--//
     makePagination(meta, links) {
       let pagination = {
@@ -179,6 +189,20 @@ export default {
       this.pagination = pagination;
     },
     //---End Pagination Function--//
+    //---FetchValues Function--//
+    fetchValues() {
+      let vm = this;
+      axios
+        .get("/api/user-referral-bonus") //calling the api url for packages data
+        .then((response) => {
+          this.referral_bonuses = response.data.data;
+          vm.makePagination(response.data.meta, response.data.links);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    //---End FetchValues Function--//
   },
 };
 </script>

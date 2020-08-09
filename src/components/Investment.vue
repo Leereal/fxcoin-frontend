@@ -92,8 +92,7 @@
         <!-- /.card-body -->
         <div class="card-footer">
           <p class="text-danger">
-            Please make sure you complete your payments within 12 hours to avoid
-            being blocked
+            Thank you for investing. It's now time to wait for your investment to mature and then sale on  Market Place
           </p>
         </div>
         <!-- /.card-footer -->
@@ -258,7 +257,7 @@ export default {
     //---FetchValues Function--//
     fetchValues() {
       axios
-        .get("/api/investment") //calling the api url for packages data
+        .get("/api/investments") //calling the api url for packages data
         .then((response) => {
           this.investments = response.data.data;
         })

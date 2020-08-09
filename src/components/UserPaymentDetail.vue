@@ -57,8 +57,7 @@
         <div class="card-body">
           <table class="table table-striped">
             <thead>
-              <tr>
-                <th scope="col">#</th>
+              <tr>               
                 <th scope="col">Payment Method</th>
                 <th scope="col">Account Number</th>
                 <th scope="col">Actions</th>
@@ -68,8 +67,7 @@
               <tr
                 v-for="payment_detail in payment_details"
                 v-bind:key="payment_detail.id"
-              >
-                <th scope="row">{{ payment_detail.id }}</th>
+              >                
                 <td>{{ payment_detail.payment_method }}</td>
                 <td>{{ payment_detail.account_number }}</td>
                 <td>

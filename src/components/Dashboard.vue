@@ -52,31 +52,12 @@
         </div>
         <div class="row mt-3">
           <div class="col-lg-3 col-6">
+            <router-link to="/trade">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <p class="inner-title">100 000 points<p>
-                <hr>
-                <h5>$1 500 000.00</h5>
-                <hr>
-                <p>Balance</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer"
-                >More info <i class="fas fa-arrow-circle-right"></i
-              ></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>Bounce Rate</p>
+                <h3>30 000 <sup style="font-size: 20px">points</sup></h3>
+                <p>Withdrawals: $30 000</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -85,10 +66,30 @@
                 >More info <i class="fas fa-arrow-circle-right"></i
               ></a>
             </div>
+            </router-link>
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
+            <router-link to="/investments">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>300 000 <sup style="font-size: 20px">points</sup></h3>
+                <p>Balance: $300 000</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer"
+                >More info <i class="fas fa-arrow-circle-right"></i
+              ></a>
+            </div>
+            </router-link>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <router-link to="/referrals">
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3>44</h3>
@@ -102,58 +103,65 @@
                 >More info <i class="fas fa-arrow-circle-right"></i
               ></a>
             </div>
+            </router-link>
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
+            <router-link to="/referral-bonus">
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3>250 <sup style="font-size: 20px">points</sup></h3>
 
-                <p>Unique Visitors</p>
+                <p>Referral Bonus : $250</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
               <a href="#" class="small-box-footer"
-                >More info <i class="fas fa-arrow-circle-right"></i
+                >Withdraw Now <i class="fas fa-arrow-circle-right"></i
               ></a>
             </div>
+            </router-link>
           </div>
           <!-- ./col -->
         </div>
         <div class="row">
           <div class="col-12 col-sm-6 col-md-3">
+            <router-link to="/investments">
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"
                 ><i class="fas fa-cog"></i
               ></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">CPU Traffic</span>
+                <span class="info-box-text">Total Investments</span>
                 <span class="info-box-number">
-                  10
-                  <small>%</small>
+                  500 000
+                  <small>points</small>
                 </span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
+            </router-link>
           </div>
           <!-- /.col -->
           <div class="col-12 col-sm-6 col-md-3">
+            <router-link to="/offers">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-danger elevation-1"
                 ><i class="fas fa-thumbs-up"></i
               ></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Likes</span>
+                <span class="info-box-text">Offers</span>
                 <span class="info-box-number">41,410</span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
+            </router-link>
           </div>
           <!-- /.col -->
 
@@ -161,33 +169,37 @@
           <div class="clearfix hidden-md-up"></div>
 
           <div class="col-12 col-sm-6 col-md-3">
+            <router-link to="/trade">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-success elevation-1"
                 ><i class="fas fa-shopping-cart"></i
               ></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Sales</span>
+                <span class="info-box-text">Pending Payments</span>
                 <span class="info-box-number">760 points</span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
+            </router-link>
           </div>
           <!-- /.col -->
           <div class="col-12 col-sm-6 col-md-3">
+            <router-link to="/referrals">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-warning elevation-1"
                 ><i class="fas fa-users"></i
               ></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Referrals</span>
+                <span class="info-box-text">Active Referrals</span>
                 <span class="info-box-number">23</span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
+            </router-link>
           </div>
           <!-- /.col -->
         </div>
@@ -854,45 +866,53 @@
 
           <div class="col-md-4">
             <!-- Info Boxes Style 2 -->
-            <div class="info-box mb-3 bg-warning">
-              <span class="info-box-icon"><i class="fas fa-tag"></i></span>
+            <div class="info-box mb-3 bg-twitter">
+              <router-link to="www.twitter.com">
+              <span class="info-box-icon"><i class="fab fa-twitter"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Inventory</span>
-                <span class="info-box-number">5,200</span>
+                <span class="info-box-text">Twitter</span>
+                <span class="info-box-number">Follow Us</span>
               </div>
               <!-- /.info-box-content -->
+              </router-link>
             </div>
             <!-- /.info-box -->
-            <div class="info-box mb-3 bg-success">
-              <span class="info-box-icon"><i class="far fa-heart"></i></span>
+            <div class="info-box mb-3 bg-facebook">
+              <router-link to="www.facebook.com">
+              <span class="info-box-icon"><i class="fab fa-facebook"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Mentions</span>
-                <span class="info-box-number">92,050</span>
+                <span class="info-box-text">Facebook Group</span>
+                <span class="info-box-number">Join Now</span>
               </div>
               <!-- /.info-box-content -->
+              </router-link>
             </div>
             <!-- /.info-box -->
-            <div class="info-box mb-3 bg-danger">
+            <div class="info-box mb-3 bg-telegram">
+              <router-link to="www.telegram.com">
               <span class="info-box-icon"
-                ><i class="fas fa-cloud-download-alt"></i
+                ><i class="fab fa-telegram"></i
               ></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Downloads</span>
-                <span class="info-box-number">114,381</span>
+                <span class="info-box-text">Telegram Group</span>
+                <span class="info-box-number">Join Now</span>
               </div>
               <!-- /.info-box-content -->
+              </router-link>
             </div>
             <!-- /.info-box -->
-            <div class="info-box mb-3 bg-info">
-              <span class="info-box-icon"><i class="far fa-comment"></i></span>
+            <div class="info-box mb-3 bg-green">
+              <router-link to="www.whatsapp.com">
+              <span class="info-box-icon"><i class="fab fa-whatsapp"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Direct Messages</span>
-                <span class="info-box-number">163,921</span>
+                <span class="info-box-text">WhatsApp Group</span>
+                <span class="info-box-number">Join Now</span>
               </div>
+              </router-link>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
@@ -915,9 +935,21 @@ export default {
     };
   },
   created(){
-    
+    this.fetchValues();
   },
   methods: {
+
+    //---FetchValues Function--//
+    fetchValues() {
+      axios
+        .get("/api/user-pending-payments") //calling the api url for packages data
+        .then((response) => {
+          this.market_places = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     copyReferralLink() {
       let referralLinkToCopy = document.querySelector("#referral-link");
       referralLinkToCopy.setAttribute("type", "text");
@@ -943,7 +975,7 @@ export default {
       return this.$store.getters.currentUser;
     },
     referralLink(){
- return axios.defaults.baseURL +"/register?ref="+this.currentUser.username
+ return this.$ipAdr +"/register?ref="+this.currentUser.username
     }
   
   },
@@ -955,5 +987,20 @@ export default {
 }
 .inner-title{
   font-size: 200%;
+}
+.bg-telegram{
+  background-color: #0088cc;
+  color:white;  
+}
+.bg-telegram > a,.bg-twitter > a,.bg-facebook > a{
+  color: white;
+}
+.bg-twitter{
+  background-color: #00acee;
+  color:white;  
+}
+.bg-facebook{
+  background-color: #3b5998;
+  color:white;  
 }
 </style>

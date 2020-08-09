@@ -28,7 +28,8 @@ import 'admin-lte/dist/css/adminlte.css';
 import {initialize} from './helpers/general';
 
 window.axios = require('axios');
-window.axios.defaults.baseURL = 'http://127.0.0.1:8000';
+window.axios.defaults.baseURL = 'http://192.168.0.108:80';
+Vue.prototype.$ipAdr = 'http://192.168.0.108:8080'
 
 
 

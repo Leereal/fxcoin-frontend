@@ -14,6 +14,7 @@ import PendingPayment from '../components/PendingPayment.vue';
 import Settings from '../components/Settings.vue';
 import Investment from '../components/Investment.vue';
 import Referral from '../components/Referral.vue';
+import ReferralBonus from '../components/ReferralBonus.vue';
 import Trade from '../components/Trade.vue';
 import Offer from '../components/Offer.vue';
 import Login from '../auth/Login.vue';
@@ -120,6 +121,12 @@ const routes = [
     path: "/referrals",
     name: "referrals",
     component: Referral,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/referral-bonus",
+    name: "referral-bonus",
+    component: ReferralBonus,
     meta: { requiresAuth: true },
   },
   {

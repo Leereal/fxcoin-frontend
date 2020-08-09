@@ -12,48 +12,8 @@
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      <li class="dropdown notifications-menu open">
-            <a href="#"  class="dropdown-toggle a-notification" data-toggle="dropdown" aria-expanded="true">
-              <i class="fas fa-bell"></i>
-              <span class="badge badge-warning badge-notification">10</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
+      <!--Add Notifications here-->
+      
       <!-- User Dropdown Menu -->
       <li class="dropdown user user-menu">
         <a
@@ -77,11 +37,14 @@
             />
 
             <p>
-              {{currentUser.name + " " + currentUser.surname}}  
+              {{ currentUser.name + " " + currentUser.surname }}
             </p>
             <p>
-                {{currentUser.cellphone}}
-              <small>Member since {{ currentUser.created_at}}   </small>
+              {{ currentUser.cellphone }}
+              <small
+                >Member since
+                {{ currentUser.created_at | moment("dddd, MMMM Do YYYY") }}
+              </small>
             </p>
           </li>
           <!-- Menu Body -->
@@ -102,10 +65,16 @@
           <!-- Menu Footer-->
           <li class="user-footer">
             <div class="float-left">
-              <router-link to="/change-password" class="btn btn-default btn-flat">Change Password</router-link>
+              <router-link
+                to="/change-password"
+                class="btn btn-default btn-flat"
+                >Change Password</router-link
+              >
             </div>
             <div class="float-right">
-              <a href="" @click.prevent="logout"  class="btn btn-danger btn-flat">Sign out</a>
+              <a href="" @click.prevent="logout" class="btn btn-danger btn-flat"
+                >Sign out</a
+              >
             </div>
           </li>
         </ul>
@@ -131,21 +100,21 @@ export default {
   },
 };
 </script>
-<style  scoped>
+<style scoped>
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
   z-index: 5;
   height: 90px;
   width: 90px;
   border: 3px solid;
   border-color: transparent;
-  border-color:blue;
+  border-color: blue;
 }
 
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
-  z-index: 5; 
+  z-index: 5;
   font-size: 12px;
   margin-top: 10px;
-  color:white;
+  color: white;
 }
 
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small {
@@ -153,31 +122,32 @@ export default {
   font-size: 10px;
 }
 
-.navbar-nav>.user-menu>.dropdown-menu>.user-body a {
-    color: #444 !important;
+.navbar-nav > .user-menu > .dropdown-menu > .user-body a {
+  color: #444 !important;
 }
-.navbar-nav>.user-menu>.dropdown-menu>.user-body {
-    padding: 15px;
-    border-bottom: 1px solid #f4f4f4;
-    border-top: 1px solid #dddddd;
+.navbar-nav > .user-menu > .dropdown-menu > .user-body {
+  padding: 15px;
+  border-bottom: 1px solid #f4f4f4;
+  border-top: 1px solid #dddddd;
 }
-.navbar-nav>.user-menu>.dropdown-menu, .navbar-nav>.user-menu>.dropdown-menu>.user-body {
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
+.navbar-nav > .user-menu > .dropdown-menu,
+.navbar-nav > .user-menu > .dropdown-menu > .user-body {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 li.user-header {
-    background-color:cornflowerblue;
+  background-color: cornflowerblue;
 }
 
-.navbar-nav>.user-menu>.dropdown-menu {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    padding: 1px 0 0 0;
-    border-top-width: 0;
-    width: 280px;
+.navbar-nav > .user-menu > .dropdown-menu {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  padding: 1px 0 0 0;
+  border-top-width: 0;
+  width: 280px;
 }
 .main-header {
-    background-color: cornflowerblue;
+  background-color: cornflowerblue;
 }
 
 .navbar-nav > .user-menu > .dropdown-menu > .user-body:after {
@@ -187,34 +157,39 @@ li.user-header {
 .navbar-nav > .user-menu > .dropdown-menu > .user-body:after {
   clear: both;
 }
-.hidden-xs{
-    color: white;
+.hidden-xs {
+  color: white;
 }
-.skin-blue .main-header .navbar .nav>li>a:hover, .skin-blue .main-header .navbar .nav>li>a:active, .skin-blue .main-header .navbar .nav>li>a:focus, .skin-blue .main-header .navbar .nav .open>a, .skin-blue .main-header .navbar .nav .open>a:hover, .skin-blue .main-header .navbar .nav .open>a:focus, .skin-blue .main-header .navbar .nav>.active>a {
-    background: rgba(0,0,0,0.1);
-    color: #f6f6f6;
+.skin-blue .main-header .navbar .nav > li > a:hover,
+.skin-blue .main-header .navbar .nav > li > a:active,
+.skin-blue .main-header .navbar .nav > li > a:focus,
+.skin-blue .main-header .navbar .nav .open > a,
+.skin-blue .main-header .navbar .nav .open > a:hover,
+.skin-blue .main-header .navbar .nav .open > a:focus,
+.skin-blue .main-header .navbar .nav > .active > a {
+  background: rgba(0, 0, 0, 0.1);
+  color: #f6f6f6;
 }
 
 .fas {
-    display: inline-block;
-    font: normal normal normal 14 px/1 FontAwesome;
-    font-size: 15px;
-    text-rendering: auto;
-    color: whitesmoke;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font: normal normal normal 14 px/1 FontAwesome;
+  font-size: 15px;
+  text-rendering: auto;
+  color: whitesmoke;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .badge-notification {
-    position: absolute;
-    top: 9px;
-    right: 7px;
-    text-align: center;
-    font-size: 9px;
-    padding: 2px 3px;
-    line-height: .9;
+  position: absolute;
+  top: 9px;
+  right: 7px;
+  text-align: center;
+  font-size: 9px;
+  padding: 2px 3px;
+  line-height: 0.9;
 }
-
 
 /*Dropdowns in general*/
 .dropdown-menu {
@@ -236,16 +211,16 @@ li.user-header {
 .dropdown-menu > .divider {
   background-color: #eee;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu{
+.navbar-nav > .notifications-menu > .dropdown-menu {
   width: 280px;
   padding: 0 0 0 0;
   margin: 0;
   top: 100%;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li{
+.navbar-nav > .notifications-menu > .dropdown-menu > li {
   position: relative;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li.header{
+.navbar-nav > .notifications-menu > .dropdown-menu > li.header {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 0;
@@ -256,7 +231,7 @@ li.user-header {
   color: #444444;
   font-size: 14px;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li.footer > a{
+.navbar-nav > .notifications-menu > .dropdown-menu > li.footer > a {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 4px;
@@ -291,13 +266,13 @@ li.user-header {
   list-style: none;
   overflow-x: hidden;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a{
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a {
   display: block;
   white-space: nowrap;
   /* Prevent text from breaking */
   border-bottom: 1px solid #f4f4f4;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a:hover{
+.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a:hover {
   background: #f4f4f4;
   text-decoration: none;
 }
@@ -307,29 +282,47 @@ li.user-header {
   text-overflow: ellipsis;
   padding: 10px;
 }
-.navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .glyphicon,
+.navbar-nav
+  > .notifications-menu
+  > .dropdown-menu
+  > li
+  .menu
+  > li
+  > a
+  > .glyphicon,
 .navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .fa,
 .navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .ion {
   width: 20px;
 }
-.main-header .navbar .nav>li>a:hover,.main-header .navbar .nav>li>a:active, .main-header .navbar .nav>li>a:focus, .main-header .navbar .nav .open>a,.main-header .navbar .nav .open>a:hover,  .main-header .navbar .nav .open>a:focus,.main-header .navbar .nav>.active>a {
-    background:yellow;
-    color: #f6f6f6;
+.main-header .navbar .nav > li > a:hover,
+.main-header .navbar .nav > li > a:active,
+.main-header .navbar .nav > li > a:focus,
+.main-header .navbar .nav .open > a,
+.main-header .navbar .nav .open > a:hover,
+.main-header .navbar .nav .open > a:focus,
+.main-header .navbar .nav > .active > a {
+  background: yellow;
+  color: #f6f6f6;
 }
-.skin-blue .main-header .navbar .nav>li>a:hover, .skin-blue .main-header .navbar .nav>li>a:active, .skin-blue .main-header .navbar .nav>li>a:focus, .skin-blue .main-header .navbar .nav .open>a, .skin-blue .main-header .navbar .nav .open>a:hover, .skin-blue .main-header .navbar .nav .open>a:focus, .skin-blue .main-header .navbar .nav>.active>a {
-    background: #00c0ef;
-    color: #f6f6f6;
+.skin-blue .main-header .navbar .nav > li > a:hover,
+.skin-blue .main-header .navbar .nav > li > a:active,
+.skin-blue .main-header .navbar .nav > li > a:focus,
+.skin-blue .main-header .navbar .nav .open > a,
+.skin-blue .main-header .navbar .nav .open > a:hover,
+.skin-blue .main-header .navbar .nav .open > a:focus,
+.skin-blue .main-header .navbar .nav > .active > a {
+  background: #00c0ef;
+  color: #f6f6f6;
 }
 .a-notification {
-    position: relative;
-    display: block;
-    padding: 10px 15px;
-    line-height: 20px;
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  line-height: 20px;
 }
-.a-notification,.a-user {
- padding-top: 10px;
-    padding-bottom: 15px;  
-   
+.a-notification,
+.a-user {
+  padding-top: 10px;
+  padding-bottom: 15px;
 }
-
 </style>

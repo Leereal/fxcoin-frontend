@@ -24,6 +24,9 @@
     <section class="content">
       <!-- Default box -->
       <div class="card card-solid">
+        <div class="card-header">
+          <h5>Points on Sale</h5>
+        </div>
         <div class="card-body pb-0">
           <div v-if="market_status==0" class="alert alert-success" role="alert">
             Market Place is closed at the moment. Opening times are 4 AM, 10 AM,
@@ -97,18 +100,36 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-          <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li
+                v-bind:class="[{ disabled: !pagination.prev_page_url }]"
+                class="page-item"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  @click="fetchValues(pagination.prev_page_url)"
+                  >Previous</a
+                >
               </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
+              <li class="page-item disabled">
+                <a class="page-link text-dark" href="#"
+                  >Page {{ pagination.current_page }} of
+                  {{ pagination.last_page }}</a
+                >
+              </li>
+              <li
+                v-bind:class="[{ disabled: !pagination.next_page_url }]"
+                class="page-item"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  @click="fetchValues(pagination.next_page_url)"
+                  >Next</a
+                >
+              </li>
             </ul>
           </nav>
         </div>
@@ -311,6 +332,7 @@ export default {
       market_places: [],
       plans: [],
       market_status: "",
+      pagination: {},
     };
   },
   created() {
@@ -319,6 +341,17 @@ export default {
 this.marketOpen();
   },
   methods: {
+    //---Pagination Function--//
+        makePagination(meta, links) {
+            let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: links.next,
+                prev_page_url: links.prev
+            };
+            this.pagination = pagination;
+        },
+        //---End Pagination Function--//
     //---FetchValues Function--//
     fetchValues(page_url) {
       let vm = this;
@@ -382,7 +415,7 @@ this.marketOpen();
     },
     marketOpen() {
       axios.get("/api/market-open").then((response) => {
-        this.market_status = response.data[0].status;
+        this.market_status = response.data;
         });
     },
   },
