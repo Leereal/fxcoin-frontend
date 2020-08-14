@@ -3,10 +3,7 @@
   <div>
     <!-- Main content -->
     <section class="content d-flex justify-content-center align-items-center">
-      <div class="login-box">
-        <div class="login-logo">
-          <a href="../../index2.html">{{ $appName }}</a>
-        </div>
+      <div class="login-box">       
         <!-- /.login-logo -->
         <div class="card">
           <div class="card-body login-card-body">
@@ -77,7 +74,7 @@
               </div>
             </form>
 
-            <div class="social-auth-links text-center mb-3">
+            <!-- <div class="social-auth-links text-center mb-3">
               <p>- OR -</p>
               <p>- COMING SOON -</p>
               <a class="btn btn-block btn-primary">
@@ -86,7 +83,7 @@
               <a class="btn btn-block btn-danger">
                 <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
               </a>
-            </div>
+            </div> -->
             <!-- /.social-auth-links -->
 
             <p class="mb-1">
@@ -139,15 +136,15 @@ export default {
             .catch((error) => {
               this.$store.commit("loginFailed", { error });
             });
-        })
-        .catch((err) =>
+        })        
+        .catch(function(error) {
           Swal.fire({
             icon: "error",
             title: "Failed!",
-            text: "Invalid logins or you are blocked from using this site",
+            text: "Invalid Logins or You did not verify your email. Check your email",
             footer: "Contact Support if you need help",
-          })
-        );
+          });
+        });
     },
   },
   computed: {

@@ -46,15 +46,16 @@
                 v-bind:key="investment.id"
               >
                 <div class="card-header">
-                  <div class="user-block row" :class="[investment.status!=1 ? 'text-primary' : 'text-success']">
+                  <div
+                    class="user-block row"
+                    :class="[
+                      investment.status != 1 ? 'text-primary' : 'text-success',
+                    ]"
+                  >
                     <span class="username">
-                      <b>Initial Amount</b> | ${{
-                        investment.amount
-                      }}
+                      <b>Initial Amount</b> | ${{ investment.amount }}
                       | Balance:
-                      <span 
-                        >$ {{ investment.balance }}</span
-                      >
+                      <span>$ {{ investment.balance }}</span>
                     </span>
                     <span class="description"
                       >Mature By -
@@ -70,14 +71,17 @@
                       <button
                         @click="fetchValue(investment)"
                         class="btn btn-sm rounded-0"
-                        :class="[ investment.status!=1 ? 'btn-primary' : 'btn-success']"
-                        
+                        :class="[
+                          investment.status != 1
+                            ? 'btn-primary'
+                            : 'btn-success',
+                        ]"
                         type="button"
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Trade"
                         data-original-title="Trade"
-                        :disabled="investment.status!=1"
+                        :disabled="investment.status != 1"
                       >
                         <i class="fas fa-money-check-alt"></i> Trade
                       </button>
@@ -92,7 +96,8 @@
         <!-- /.card-body -->
         <div class="card-footer">
           <p class="text-danger">
-            Thank you for investing. It's now time to wait for your investment to mature and then sale on  Market Place
+            Thank you for investing. It's now time to wait for your investment
+            to mature and then sale on Market Place
           </p>
         </div>
         <!-- /.card-footer -->
@@ -239,33 +244,19 @@ export default {
         payment_detail_id: "",
         comment: "",
         reason: "",
-        due_date:""
+        due_date: "",
       }),
       market_places: [],
-      investments: [],
       payment_details: [],
     };
   },
   created() {
-    this.fetchValues();
     this.fetchPaymentMethods();
   },
   methods: {
     buyAll(amount) {
       this.tradeForm.amount = amount;
     },
-    //---FetchValues Function--//
-    fetchValues() {
-      axios
-        .get("/api/investments") //calling the api url for packages data
-        .then((response) => {
-          this.investments = response.data.data;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-
     //---FetchPaymentMethods Function--//
     fetchPaymentMethods() {
       axios
@@ -303,30 +294,40 @@ export default {
                 title: "Succefully Saved",
                 message: "Trade Created",
               });
-              this.fetchValues();
+              console.log(data);
+              this.$store.dispatch("getInvestments");
               $("#addModal").modal("hide");
             })
-            .catch(              
-              (err) => Swal.fire({
+            .catch(function(error) {
+              Swal.fire({
                 icon: "error",
                 title: "Failed!",
-                text: "Please check if your balance is enough",
+                text: error.response.data.message,
                 footer: "Contact Support if you need help",
-              }),
-            );
+              });
+            });
         }
-      }),
-        (err) =>
-          this.flashMessage.error({
-            title: "Error",
-            message: "Please try again or Contact Support",
-          });
+      });
+      // (err) =>
+      //   this.flashMessage.error({
+      //     title: "Error",
+      //     message: "Please try again or Contact Support",
+      //   });
     },
   },
   computed: {
     currentUser() {
       return this.$store.getters.currentUser;
     },
+    investments() {
+      return this.$store.getters.investments;
+    },
+  },
+  mounted() {
+    if (this.investments.length) {
+      return;
+    }
+    this.$store.dispatch("getInvestments");
   },
 };
 </script>

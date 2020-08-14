@@ -3,11 +3,7 @@
   <div>
     <!-- Main content -->
     <section class="content d-flex justify-content-center align-items-center">
-      <div class="register-box">
-        <div class="register-logo">
-          <a href="../../index2.html">{{ $appName }}</a>
-        </div>
-
+      <div class="register-box"> 
         <div class="card">
           <div class="card-body register-card-body">
             <p class="login-box-msg">Register a new membership</p>
@@ -185,7 +181,7 @@
               </div>
             </form>
 
-            <div class="social-auth-links text-center">
+            <!-- <div class="social-auth-links text-center">
               <p>- OR -</p>
               <p>- COMING SOON-</p>
               <a class="btn btn-block btn-primary">
@@ -196,7 +192,7 @@
                 <i class="fab fa-twitter mr-2"></i>
                 Sign up using Twitter
               </a>
-            </div>
+            </div> -->
             <router-link to="/login">
               <p>
                 I already have a membership
@@ -222,6 +218,7 @@ export default {
         surname: "",
         username: "",
         password: "",
+        confirm_password: "",
         email: "",
         cellphone: "",
         country_id: "",

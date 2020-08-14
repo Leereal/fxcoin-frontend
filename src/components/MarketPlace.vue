@@ -28,7 +28,11 @@
           <h5>Points on Sale</h5>
         </div>
         <div class="card-body pb-0">
-          <div v-if="market_status==0" class="alert alert-success" role="alert">
+          <div
+            v-if="!market_places.length"
+            class="alert alert-success"
+            role="alert"
+          >
             Market Place is closed at the moment. Opening times are 4 AM, 10 AM,
             4 PM and 10 PM (GMT)
           </div>
@@ -55,8 +59,8 @@
                     </div>
                     <div class="col-4 text-center">
                       <img
-                        src="../assets/fnb.png"
-                        alt="user-avatar"
+                        :src="market_place.payment_method_avatar"
+                        alt="avatar"
                         class="img-circle img-fluid"
                       />
                     </div>
@@ -99,40 +103,7 @@
           </div>
         </div>
         <!-- /.card-body -->
-        <div class="card-footer">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li
-                v-bind:class="[{ disabled: !pagination.prev_page_url }]"
-                class="page-item"
-              >
-                <a
-                  class="page-link"
-                  href="#"
-                  @click="fetchValues(pagination.prev_page_url)"
-                  >Previous</a
-                >
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link text-dark" href="#"
-                  >Page {{ pagination.current_page }} of
-                  {{ pagination.last_page }}</a
-                >
-              </li>
-              <li
-                v-bind:class="[{ disabled: !pagination.next_page_url }]"
-                class="page-item"
-              >
-                <a
-                  class="page-link"
-                  href="#"
-                  @click="fetchValues(pagination.next_page_url)"
-                  >Next</a
-                >
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <div class="card-footer"></div>
         <!-- /.card-footer -->
       </div>
       <!-- /.card -->
@@ -209,7 +180,7 @@
                       </div>
                       <div class="col-5 text-center">
                         <img
-                          src="../assets/fnb.png"
+                          :src="form.avatar"
                           alt="user-avatar"
                           class="img-circle img-fluid"
                         />
@@ -328,43 +299,15 @@ export default {
         amount: "",
         package_id: "",
         comment: "",
+        avatar: "",
       }),
-      market_places: [],
-      plans: [],
-      market_status: "",
-      pagination: {},
     };
   },
   created() {
-    this.fetchValues();
-    this.fetchPackages();
-this.marketOpen();
+    //this.fetchValues();
+    //this.fetchPackages();
   },
   methods: {
-    //---Pagination Function--//
-        makePagination(meta, links) {
-            let pagination = {
-                current_page: meta.current_page,
-                last_page: meta.last_page,
-                next_page_url: links.next,
-                prev_page_url: links.prev
-            };
-            this.pagination = pagination;
-        },
-        //---End Pagination Function--//
-    //---FetchValues Function--//
-    fetchValues(page_url) {
-      let vm = this;
-      page_url = page_url || axios.defaults.baseURL + "/api/market-place";
-      fetch(page_url) //calling the api url for packages data
-        .then((res) => res.json())
-        .then((res) => {
-          this.market_places = res.data; //sending data to plans array
-          vm.makePagination(res.meta, res.links);
-        })
-        .catch((err) => console.log(err));
-    },
-    //---End FetchValues Function--//
     fetchPackages(page_url) {
       page_url = page_url || axios.defaults.baseURL + "/api/package";
       fetch(page_url) //calling the api url for packages data
@@ -381,7 +324,7 @@ this.marketOpen();
       this.form.balance = form.balance;
       this.form.country = form.country;
       this.form.cellphone = form.cellphone;
-      this.form.account_number = form.account_number;
+      this.form.avatar = form.payment_method_avatar
       this.form.payment_method_id = form.payment_method_id;
       this.form.amount = "";
       this.form.package_id = "";
@@ -398,26 +341,36 @@ this.marketOpen();
             title: "Succefully Saved",
             message: "Offer Successfully Placed, Pay within 12 hours",
           });
-          this.fetchValues();
+          this.$store.dispatch("getMarketPlaces");
           $("#addModal").modal("hide");
         })
-        .catch((err) =>
+        .catch(function(error) {
           Swal.fire({
             icon: "error",
             title: "Failed!",
-            text: "Please check try again",
+            text: error.response.data.message,
             footer: "Contact Support if you need help",
-          })
-        );
+          });
+        });
     },
     buyAll(amount) {
       this.form.amount = amount;
     },
-    marketOpen() {
-      axios.get("/api/market-open").then((response) => {
-        this.market_status = response.data;
-        });
+  },
+  computed: {
+    market_places() {
+      return this.$store.getters.market_places;
     },
+    plans() {
+      return this.$store.getters.plans;
+    },
+  },
+  mounted() {
+    if (this.market_places.length) {
+      return;
+    }
+    this.$store.dispatch("getMarketPlaces");
+    this.$store.dispatch("getPackages");
   },
 };
 </script>

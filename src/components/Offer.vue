@@ -25,8 +25,9 @@
       <!-- Default box -->
       <div class="card card-solid">
         <div class="card-body pb-0">
-          <div v-if="offers.length == 0 "  class="alert alert-primary" >
-            Oops! It looks like you paid all your offers. There is nothing to pay here. Wait for Market Place to Open and then place your Offer. 
+          <div v-if="offers.length == 0" class="alert alert-primary">
+            Oops! It looks like you paid all your offers. There is nothing to
+            pay here. Wait for Market Place to Open and then place your Offer.
           </div>
           <div class="row col-lg-6">
             <div class="card-body pt-0">
@@ -40,7 +41,7 @@
                     <div class="user-block">
                       <img
                         class="img-circle"
-                        src="../assets/fnb.png"
+                        :src="offer.payment_method_avatar"
                         alt="User Image"
                       />
                       <span class="username">
@@ -65,6 +66,24 @@
                   <!-- /.card-header -->
                   <div class="card-body text-center" style="display: none;">
                     <div class="row">
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                          <li>
+                            <span class="fa-li"
+                              ><i class="fas fa-piggy-bank"></i
+                            ></span>
+                            Account Number: {{ offer.account_to_pay }}
+                          </li>
+                          <hr>                          
+                          <li>
+                            <span class="fa-li"
+                              ><i class="fas fa-lg fa-phone"></i
+                            ></span>
+                            Phone #: {{ offer.cellphone }}
+                          </li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="row">
                       <div class="col-6">
                         <div class="imageView">
                           <img :src="imageView" width="150" />
@@ -73,6 +92,7 @@
                           <label for="pop">Proof Of Payment</label>
                           <input
                             type="file"
+                            accept="image/*"
                             v-on:change="attachFile"
                             ref="formImage"
                             class="form-control"
@@ -147,7 +167,7 @@ export default {
         id: "",
       }),
       offers: [],
-      imageView: null,
+      imageView: "",
       file: "",
     };
   },
@@ -157,25 +177,36 @@ export default {
   methods: {
     //Attach Image
     attachFile(e) {
-      this.file = e.target.files[0];
-
-      let reader = new FileReader();
-      reader.onloadend = () => {
-        if (this.file.type == "application/pdf") {
-          this.imageView = require("../assets/pdf.png");
+      var pattern = /image-*/;
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      if (image.type.match(pattern)) {
+        if (image["size"] < 4000000) {
+          reader.onload = (e) => {
+            this.imageView = e.target.result;
+            this.form.pop = this.imageView;
+            console.log(this.imageView);
+          };
         } else {
-          this.imageView = reader.result;
+          this.flashMessage.error({
+            title: "Error",
+            message: "Image is too big try to make it small",
+          });
         }
-      };
-      reader.readAsDataURL(this.file);
-      this.form.pop = this.imageView;    
+      } else {
+        this.flashMessage.error({
+          title: "Error",          
+          message: "File type is not an image. Please take a screenshot of POP",
+        });
+      }
     },
     //---FetchValues Function--//
     fetchValues() {
       axios
         .get("/api/offers") //calling the api url for packages data
         .then((response) => {
-          this.offers = response.data.data;  
+          this.offers = response.data.data;
         })
         .catch(function(error) {
           console.log(error);
@@ -187,7 +218,7 @@ export default {
       this.form.id = offer.id;
       Swal.fire({
         title: "Are you sure?",
-        text: "Did you make the required amount",
+        text: "Did you pay the required amount",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

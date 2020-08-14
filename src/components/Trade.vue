@@ -26,7 +26,14 @@
       <div class="card card-solid">
         <div class="card-header">
           <h3 class="card-title">Pending Payments</h3>
-          <div class="card-tools">            
+          <div class="card-tools">
+            <button              
+              class="btn btn-sm btn-primary"
+              data-toggle="modal"
+              data-target="#addModal"
+            >
+              <i class="fas fa-gavel"></i> Deposit
+            </button>
             <button
               type="button"
               class="btn btn-tool"
@@ -34,7 +41,7 @@
               title="Collapse"
             >
               <i class="fas fa-minus"></i>
-            </button>            
+            </button>
           </div>
         </div>
         <div class="card-body pb-0">
@@ -49,14 +56,17 @@
                   <div class="user-block">
                     <img
                       class="img-circle"
-                      src="../assets/fnb.png"
+                      :src="market_place.payment_method_avatar"
                       alt="User Image"
                     />
                     <span class="username">
                       {{ market_place.payment_method }} | ${{
                         market_place.amount
                       }}
-                      | Balance: <span :class="{'text-red' : market_place.balance == 0}">$ {{ market_place.balance }}</span>
+                      | Balance:
+                      <span :class="{ 'text-red': market_place.balance == 0 }"
+                        >$ {{ market_place.balance }}</span
+                      >
                     </span>
                     <span class="description">Time Placed - 7:30 PM Today</span>
                   </div>
@@ -87,7 +97,7 @@
                         <div class="user-block">
                           <img
                             class="img-circle"
-                            src="../assets/fnb.png"
+                            :src="pending_payment.payment_method_avatar"
                             alt="User Image"
                           />
                           <span class="username">
@@ -113,7 +123,7 @@
                         <div class="user-block">
                           <img
                             class="img-circle"
-                            src="../assets/fnb.png"
+                            :src="pending_payment.payment_method_avatar"
                             alt="User Image"
                           />
                           <span class="username">
@@ -145,7 +155,7 @@
                           <div class="col-6">
                             <label for="imageView">Proof of Payment</label>
                             <div class="imageView">
-                              <img src="../assets/fnb.png" width="150" />
+                              <img :src="pending_payment.pop" width="150" />
                             </div>
                           </div>
                           <div class="col-6">
@@ -182,7 +192,7 @@
                         <div class="user-block">
                           <img
                             class="img-circle"
-                            src="../assets/fnb.png"
+                            :src="pending_payment.payment_method_avatar"
                             alt="User Image"
                           />
                           <span class="username">
@@ -246,7 +256,176 @@
       </div>
       <!-- /.card -->
     </section>
-    <!-- /.content -->    
+    <!-- /.content -->
+    <div
+      class="modal fade"
+      id="addModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-primary">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalTitle">
+              Make Your Pool Deposit Here
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form @submit.prevent="addValue" id="myForm">
+            <div class="modal-body">
+              <!-- Start Card for Offers -->
+              <div class="d-flex align-items-stretch">
+                <div class="card bg-light">
+                  <div class="card-header text-muted border-bottom-0">
+                    Deposit
+                  </div>
+                  <div class="card-body pt-0">
+                    <div class="row">
+                      <div class="col-7">
+                        <h2 class="lead">
+                          <b>{{ form.payment_method }}</b>
+                        </h2>
+                        <hr />
+                        <p class="text-muted text-sm">
+                          <b>Amount: </b> ${{ form.balance }} |<a
+                            href=""
+                            @click.prevent="buyAll(form.balance)"
+                          >
+                            Buy All</a
+                          >
+                        </p>
+                        <hr />
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                          <li>
+                            <span class="fa-li"
+                              ><i class="fas fa-piggy-bank"></i
+                            ></span>
+                            Account Number: {{ form.account_number }}
+                          </li>
+                          <li>
+                            <span class="fa-li"
+                              ><i class="fa fa-flag"></i
+                            ></span>
+                            Country: {{ form.country }}
+                          </li>
+                          <li>
+                            <span class="fa-li"
+                              ><i class="fas fa-lg fa-phone"></i
+                            ></span>
+                            Phone #: {{ form.cellphone }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-5 text-center">
+                        <img
+                          src="../assets/fnb.png"
+                          alt="user-avatar"
+                          class="img-circle img-fluid"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="form-group">
+                      <label for="amount">Amount</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="amount"
+                        name="amount"
+                        placeholder="Amount"
+                        v-model="form.amount"
+                        :class="{
+                          'is-invalid': form.errors.has('amount'),
+                        }"
+                      />
+                      <has-error :form="form" field="amount"></has-error>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                      <label for="package">Package</label>
+                      <select
+                        class="form-control"
+                        id="package"
+                        v-model="form.package_id"
+                        :class="{
+                          'is-invalid': form.errors.has('package_id'),
+                        }"
+                      >
+                        <option value="">Select Package</option>
+                        <option
+                          v-for="plan in plans"
+                          v-bind:key="plan.id"
+                          :value="plan.id"
+                          >{{ plan.name }} - {{ plan.interest }}% in
+                          {{ plan.period }} days</option
+                        >
+                      </select>
+                      <has-error :form="form" field="package_id"></has-error>
+                    </div>
+                    <hr />
+                    <div class="card  collapsed-card">
+                      <div class="card-header">
+                        <h3 class="card-title">Add Comment (Not Required)</h3>
+                        <div class="card-tools">
+                          <button
+                            type="button"
+                            class="btn btn-tool"
+                            data-card-widget="collapse"
+                          >
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                        <!-- /.card-tools -->
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body" style="display: none;">
+                        <div class="form-group">
+                          <textarea
+                            v-model="form.comment"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Enter Your Comment..."
+                            style="margin-top: 0px; margin-bottom: 0px; height: 101px;"
+                            :class="{
+                              'is-invalid': form.errors.has('comment'),
+                            }"
+                          ></textarea>
+                          <has-error :form="form" field="comment"></has-error>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Card for Offers -->
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-light"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-outline-light">
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- /.content-wrapper -->
 </template>
@@ -266,7 +445,7 @@ export default {
       }),
       market_places: [],
       pending_payments: [],
-      payment_details:[]
+      payment_details: [],
     };
   },
   created() {
@@ -291,7 +470,7 @@ export default {
       axios
         .get("/api/user-payment-details") //calling the api url for PaymentMethods data
         .then((response) => {
-          this.payment_details = response.data.data;         
+          this.payment_details = response.data.data;
         })
         .catch(function(error) {
           console.log(error);
@@ -299,7 +478,7 @@ export default {
     },
 
     //---Add Trade Function--//
-    addTrade() {        
+    addTrade() {
       Swal.fire({
         title: "Are you sure?",
         text: "Do you want to trade now?",
@@ -317,7 +496,7 @@ export default {
               message: "Trade Created",
             });
             this.fetchValues();
-            $('#addModal').modal('hide');            
+            $("#addModal").modal("hide");
           });
         }
       }),

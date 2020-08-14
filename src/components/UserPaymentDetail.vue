@@ -57,7 +57,7 @@
         <div class="card-body">
           <table class="table table-striped">
             <thead>
-              <tr>               
+              <tr>
                 <th scope="col">Payment Method</th>
                 <th scope="col">Account Number</th>
                 <th scope="col">Actions</th>
@@ -67,8 +67,15 @@
               <tr
                 v-for="payment_detail in payment_details"
                 v-bind:key="payment_detail.id"
-              >                
-                <td>{{ payment_detail.payment_method }}</td>
+              >
+                <td>
+                  <img
+                    class="img-circle"
+                    :src="payment_detail.payment_method_avatar"
+                    alt="User Image"
+                    width="30"
+                  />{{ payment_detail.payment_method }}
+                </td>
                 <td>{{ payment_detail.account_number }}</td>
                 <td>
                   <span data-toggle="modal" data-target="#addModal">
@@ -101,40 +108,7 @@
           </table>
         </div>
         <!-- /.card-body -->
-        <div class="card-footer">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li
-                v-bind:class="[{ disabled: !pagination.prev_page_url }]"
-                class="page-item"
-              >
-                <a
-                  class="page-link"
-                  href="#"
-                  @click="fetchValues(pagination.prev_page_url)"
-                  >Previous</a
-                >
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link text-dark" href="#"
-                  >Page {{ pagination.current_page }} of
-                  {{ pagination.last_page }}</a
-                >
-              </li>
-              <li
-                v-bind:class="[{ disabled: !pagination.next_page_url }]"
-                class="page-item"
-              >
-                <a
-                  class="page-link"
-                  href="#"
-                  @click="fetchValues(pagination.next_page_url)"
-                  >Next</a
-                >
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <div class="card-footer"></div>
         <!-- /.card-footer-->
       </div>
       <!-- /.card -->
@@ -232,44 +206,28 @@ export default {
         payment_method: "",
         account_number: "",
       }),
-      payment_details: [],
+
       payment_methods: [],
 
       pm_id: "",
-      pagination: {},
+
       edit: false,
     };
   },
   created() {
-    this.fetchValues(); //Calling function/method to output data after component created
+    if (this.payment_details.length) {
+      return;
+    }
+    this.$store.dispatch("getPaymentDetails");
     this.fetchPM();
   },
+  mounted() {},
+  computed: {
+    payment_details() {
+      return this.$store.getters.payment_details;
+    },
+  },
   methods: {
-    //---FetchValues Function--//
-    fetchValues(page_url) {
-      let vm = this;
-      axios
-        .get("/api/user-payment-details") //calling the api url for packages data
-        .then((response) => {
-          this.payment_details = response.data.data;
-          vm.makePagination(response.data.meta, response.data.links);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-    //---End FetchValues Function--//
-    //---Pagination Function--//
-    makePagination(meta, links) {
-      let pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev,
-      };
-      this.pagination = pagination;
-    },
-    //---End Pagination Function--//
     //---Delete Function--//
     deleteValue(id) {
       Swal.fire({
@@ -282,21 +240,21 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          fetch(axios.defaults.baseURL + "api/payment-detail/" + id, {
+          fetch(axios.defaults.baseURL + "/api/payment-detail/" + id, {
             method: "delete",
           })
             .then((res) => res.json())
             .then((data) => {
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
-              this.fetchValues();
+              this.$store.dispatch("getPaymentDetails");
             })
-            .catch(
+            .catch((err) =>
               Swal.fire({
                 icon: "error",
                 title: "Failed!",
-                text: "Please try again or refresh page",
+                text: "Please check if your balance is enough",
                 footer: "Contact Support if you need help",
-              }).then(this.fetchValues())
+              })
             );
         }
       });
@@ -311,18 +269,21 @@ export default {
           .then((data) => {
             this.form.payment_method = "";
             this.form.account_number = "";
-            Swal.fire("Good job!", "You clicked the button!", "success");
-            this.fetchValues();
+            this.flashMessage.setStrategy("single");
+            this.flashMessage.success({
+              title: "Succefully Saved",
+              message: "Trade Created",
+            });
+            this.$store.dispatch("getPaymentDetails");
             $("#addModal").modal("hide");
           })
-          .catch(
+          .catch((err) =>
             Swal.fire({
               icon: "error",
               title: "Failed!",
-              text: "Please try again or refresh page",
+              text: "Please check if your balance is enough",
               footer: "Contact Support if you need help",
-            }),
-            (err) => console.log(err)
+            })
           );
         //End Add Values
       } else {
@@ -334,7 +295,7 @@ export default {
             this.form.payment_method = "";
             this.form.account_number = "";
             Swal.fire("Good job!", "Saved Successfully", "success");
-            this.fetchValues();
+            //this.fetchValues();
           })
           .catch(
             Swal.fire({

@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import FlashMessage from '@smartweb/vue-flash-message'
 import Swal from 'sweetalert2'
 import { Form, HasError, AlertError } from 'vform'
+import money from 'v-money'
+
+Vue.use(money, {precision: 2})
 
 Vue.use(require('vue-moment'));
 import { Picker } from 'emoji-mart-vue';
@@ -25,11 +28,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'admin-lte/dist/css/adminlte.css';
 
 
+
 import {initialize} from './helpers/general';
 
 window.axios = require('axios');
 window.axios.defaults.baseURL = 'http://192.168.0.108:80';
-Vue.prototype.$ipAdr = 'http://192.168.0.108:8080'
+
+Vue.prototype.$ipAdr = 'http://tradingkingdom.us'
 
 
 

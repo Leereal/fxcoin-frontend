@@ -1,16 +1,11 @@
 <template>
   <div class="wrapper hold-transition sidebar-mini layout-fixed">
-    <template v-if="!currentUser">
-      <div id="nav">
-        <FlashMessage :position="'bottom right'"></FlashMessage>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/login">Login</router-link> |
-        <router-link to="/register">Register</router-link>
-      </div>
-      <router-view />
+    <template v-if="!currentUser"> 
+        <MainHeader />
+        <router-view />
+        <MainFooter />
     </template>
-    <template v-else>     
+    <template v-else>
       <Header />
       <Sidebar />
       <router-view></router-view>
@@ -22,12 +17,17 @@
 import Header from "./inc/Header.vue";
 import Sidebar from "./inc/Sidebar.vue";
 import Footer from "./inc/Footer.vue";
+import MainHeader from "./web/Header.vue";
+import MainFooter from "./web/Footer.vue";
+
 
 export default {
   components: {
     Header,
     Sidebar,
     Footer,
+    MainHeader,
+    MainFooter,
   },
   computed: {
     currentUser() {
@@ -42,7 +42,7 @@ export default {
   font-family: "Nunito", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   color: #2c3e50;
   font-size: 0.8rem;
   line-height: 1.6;

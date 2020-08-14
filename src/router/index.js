@@ -34,10 +34,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "*",
+    component: Dashboard,
+    meta: { requiresAuth: true },
   },
   {
     path: "/dashboard",
@@ -135,7 +134,7 @@ const routes = [
     component: ForgotPassword,
   }, 
   {
-    path: "/password-reset",
+    path: "/password-reset/",
     name: "password-reset",
     component: PasswordReset,
   },  
