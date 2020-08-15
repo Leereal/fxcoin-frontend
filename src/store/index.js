@@ -18,7 +18,9 @@ export default {
     plans: [],
     investments: [],
     totals: [],
-    payment_details:[],
+    payment_details: [],
+    countries: [],
+    deposit_packages:[],
   },
   getters: {
     isLoading(state) {
@@ -46,8 +48,14 @@ export default {
       return state.payment_details;
     },
     totals(state) {
-        return state.totals;
-      },
+      return state.totals;
+    },
+    countries(state) {
+      return state.countries;
+    },
+    deposit_packages(state) {
+      return state.deposit_packages;     
+    },
   },
   mutations: {
     login(state) {
@@ -86,8 +94,14 @@ export default {
       state.totals = payload;
     },
     updatePaymentDetails(state, payload) {
-        state.payment_details = payload;
-      },
+      state.payment_details = payload;
+    },
+    updateCountries(state, payload) {
+      state.countries = payload;
+    },
+    updateDepositPackages(state, payload) {
+      state.deposit_packages = payload;
+    },
   },
   actions: {
     login(context) {
@@ -103,6 +117,11 @@ export default {
         context.commit("updatePackages", response.data.data);
       });
     },
+    getDepositPackages(context) {
+      axios.get("/api/deposit-packages").then((response) => {
+        context.commit("updateDepositPackages", response.data.data);
+      });
+    },
     getInvestments(context) {
       axios.get("/api/investments").then((response) => {
         context.commit("updateInvestments", response.data.data);
@@ -114,9 +133,14 @@ export default {
       });
     },
     getPaymentDetails(context) {
-        axios.get("/api/user-payment-details").then((response) => {
-          context.commit("updatePaymentDetails", response.data.data);
-        });
-      },
+      axios.get("/api/user-payment-details").then((response) => {
+        context.commit("updatePaymentDetails", response.data.data);
+      });
+    },
+    getCountries(context) {
+      axios.get("/api/country").then((response) => {
+        context.commit("updateCountries", response.data.data);
+      });
+    },
   },
 };

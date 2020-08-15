@@ -28,6 +28,13 @@
           <h3 class="card-title">Total Investments</h3>
           <div class="card-tools">
             <button
+              class="btn btn-sm btn-primary"
+              data-toggle="modal"
+              data-target="#depositModal"
+            >
+              <i class="fas fa-money-check-alt"></i> Direct Deposit
+            </button>
+            <button
               type="button"
               class="btn btn-tool"
               data-card-widget="collapse"
@@ -226,6 +233,179 @@
         </div>
       </div>
     </div>
+    <!-- Deposit Modal -->
+    <div
+      class="modal fade"
+      id="depositModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="depositModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-primary">
+          <div class="modal-header">
+            <h5 class="modal-title" id="depositModalTitle">
+              Make Your Offer
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form @submit.prevent="depositInvestment" id="myForm">
+            <div class="modal-body">
+              <!-- Start Card for Offers -->
+              <div class="d-flex align-items-stretch">
+                <div class="card bg-light">
+                  <div class="row">
+                    <div class="card-body pt-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <h2 class="lead">
+                            <b>{{ form.payment_method }}</b>
+                          </h2>
+                          <hr />
+                          <ul class="ml-4 mb-0 fa-ul text-muted">
+                            <li>
+                              <img
+                                src="../assets/bitcoin.png"
+                                alt="user-avatar"
+                                class="img-circle img-fluid"
+                                width="20"
+                              />
+                              Bitcoin Address Below and Pay:
+                            </li>
+                            <li>
+                              <div class="input-group">
+                                <input
+                                  type="text"
+                                  id="btcAddress"
+                                  class="form-control"
+                                  readonly
+                                  value="ynzomw87rhndu74jfnsmmskjri9578udnru8jieu78"
+                                />
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span
+                                      class="btn btn-info btn-sm text-white copy-btn ml-auto fa fa-copy"
+                                      @click.stop.prevent="copyBtcAddress"
+                                    >
+                                      Copy
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              Please click copy button to copy the BTC Address
+                              correctly
+                            </li>
+                            <li>
+                              <div class="form-group">
+                                <label for="amount">Amount</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="amount"
+                                  placeholder="Amount"
+                                />
+                              </div>
+                            </li>
+                            <li>
+                              <div class="form-group">
+                                <div
+                                  class="custom-control custom-radio"
+                                  v-for="deposit_package in deposit_packages"
+                                  :key="deposit_package.id"
+                                >
+                                  <input
+                                    class="custom-control-input"
+                                    type="radio"
+                                    id="radio1"
+                                    name="radio1"
+                                  />
+                                  <label
+                                    for="radio1"
+                                    class="custom-control-label"
+                                    >{{ deposit_package.name }} |
+                                    {{ deposit_package.interest }}% |{{
+                                      deposit_package.period
+                                    }}
+                                    days</label
+                                  >
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <hr />
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="imageView">
+                          <img :src="imageView" width="150" />
+                        </div>
+                        <div class="form-group">
+                          <label for="pop">Proof Of Payment</label>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            v-on:change="attachFile"
+                            ref="formImage"
+                            class="form-control"
+                            id="image"
+                            :class="{
+                              'is-invalid': form.errors.has('comment'),
+                            }"
+                          />
+                          <has-error :form="form" field="comment"></has-error>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group">
+                          <textarea
+                            v-model="form.comment"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Enter Your Comment..."
+                            style="margin-top: 0px; margin-bottom: 0px; height: 101px;"
+                            :class="{
+                              'is-invalid': form.errors.has('comment'),
+                            }"
+                          ></textarea>
+                          <has-error :form="form" field="comment"></has-error>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Card for Offers -->
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-light"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-outline-light">
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- /.content-wrapper -->
 </template>
@@ -246,14 +426,73 @@ export default {
         reason: "",
         due_date: "",
       }),
+      depositForm: new Form({
+        account_number: "",
+        transaction_code: "",
+        payment_method: "",
+        balance: "",
+        country: "",
+        cellphone: "",
+        market_place_id: "",
+        payment_method_id: "",
+        amount: "",
+        package_id: "",
+        comment: "",
+        avatar: "",
+        pop: "",
+      }),
       market_places: [],
       payment_details: [],
+      imageView: "",
     };
   },
   created() {
     this.fetchPaymentMethods();
   },
   methods: {
+    //Attach Image
+    attachFile(e) {
+      var pattern = /image-*/;
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      if (image.type.match(pattern)) {
+        if (image["size"] < 4000000) {
+          reader.onload = (e) => {
+            this.imageView = e.target.result;
+            this.depositForm.pop = this.imageView;
+            console.log(this.imageView);
+          };
+        } else {
+          this.flashMessage.error({
+            title: "Error",
+            message: "Image is too big try to make it small",
+          });
+        }
+      } else {
+        this.flashMessage.error({
+          title: "Error",
+          message: "File type is not an image. Please take a screenshot of POP",
+        });
+      }
+    },
+    //Copy btc address
+    copyBtcAddress() {
+      let btcAddressToCopy = document.querySelector("#btcAddress");
+      btcAddressToCopy.setAttribute("type", "text");
+      btcAddressToCopy.select();
+
+      try {
+        var successful = document.execCommand("copy");
+        this.flashMessage.setStrategy("single");
+        this.flashMessage.success({
+          title: "Succefully Copied",
+          message: "BTC address copied to clipboard",
+        });
+      } catch (err) {
+        alert("Oops, unable to copy");
+      }
+    },
     buyAll(amount) {
       this.tradeForm.amount = amount;
     },
@@ -322,12 +561,19 @@ export default {
     investments() {
       return this.$store.getters.investments;
     },
+    deposit_packages() {
+      return this.$store.getters.deposit_packages;
+    },
   },
   mounted() {
     if (this.investments.length) {
       return;
     }
     this.$store.dispatch("getInvestments");
+    if (this.deposit_packages.length) {
+      return;
+    }
+    this.$store.dispatch("getDepositPackages");
   },
 };
 </script>

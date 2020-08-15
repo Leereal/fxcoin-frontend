@@ -3,7 +3,7 @@
   <div>
     <!-- Main content -->
     <section class="content d-flex justify-content-center align-items-center">
-      <div class="register-box"> 
+      <div class="register-box">
         <div class="card">
           <div class="card-body register-card-body">
             <p class="login-box-msg">Register a new membership</p>
@@ -165,9 +165,7 @@
                       }"
                     />
 
-                    <label for="agreeTerms">
-                     I agree to <a>terms</a>
-                    </label>
+                    <label for="agreeTerms"> I agree to <a>terms</a> </label>
                     <has-error :form="form" field="terms"></has-error>
                   </div>
                 </div>
@@ -225,49 +223,46 @@ export default {
         terms: "",
         ipAddress: "",
         referrer_id: "",
-      }),
-      countries: [],
-      ref:[],
+      }), 
+      ref: [],
     };
   },
   created() {
-  
-    this.fetchCountries();
-    fetch(axios.defaults.baseURL +"/api/users/" + this.$route.query.ref) //calling the api url for packages data
-        .then((res) => res.json())
-        .then((res) => {
-          this.ref = res.data;         
+   axios.get("/api/users/"+ this.$route.query.ref) //calling the api url for packages data
+        .then((response) => {
+          this.ref = response.data.data;
         })
-        .catch((err) => console.log(err));    
+        .catch(function (error) {
+          console.log(error);
+        });
   },
   methods: {
     //---AddValue Function--//
     addValue() {
-      this.form.referrer_id =this.ref.id; 
-      this.form
-        .post("/api/register")
-        .then((data) => {
-          Swal.fire("Registration Successful", "You can login now", "success");
-          this.$router.push({ name: "login" });
-        }),
-          (err) => (Swal.fire({
+      this.form.referrer_id = this.ref.id;
+      this.form.post("/api/register").then((data) => {
+        Swal.fire("Registration Successful", "You can login now", "success");
+        this.$router.push({ name: "login" });
+      }),
+        (err) =>
+          Swal.fire({
             icon: "error",
             title: "Failed!",
             text: "Please try again or refresh page",
             footer: "Contact Support if you need help",
-          }))
-    
+          });
     },
-    //---FetchValues Function--//
-    fetchCountries(page_url) {
-      page_url = page_url || axios.defaults.baseURL + "/api/country";
-      fetch(page_url) //calling the api url for packages data
-        .then((res) => res.json())
-        .then((res) => {
-          this.countries = res.data; //sending data to plans array
-        })
-        .catch((err) => console.log(err));
+  },
+  computed: {
+    countries() {
+      return this.$store.getters.countries;
     },
+  },
+  mounted() {
+    if (this.countries.length) {
+      return;
+    }
+    this.$store.dispatch("getCountries");
   },
 };
 </script>
