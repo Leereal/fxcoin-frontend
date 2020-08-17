@@ -1,32 +1,33 @@
 <template>
   <!-- section -->
-  <div class="section white_fonts" style="background: #2a2a2a;">
+  <div class="section white_fonts">
     <div class="container">
       <div class="row">
-        <div class="col-md-6" style="background: #fff;">
+        <div class="col-md-6" style="background-color:yellow;">
           <div class="full text_align_right_img">
-            <img src="../assets/front/images/img2.png" alt="#" />
+            <img src="../assets/currencies.png" alt="#" class="img-fluid" />
           </div>
         </div>
-        <div class="col-md-6 layout_padding">
-          <div class="full paddding_left_15">
+        <div class="col-md-6 " style="background: #2a2a2a;">
+          <div class="full">
             <div class="heading_main text_align_left">
-              <h2><span class="theme_color">Apply for</span> Exchange</h2>
+              <h2><span class="theme_color">Register</span> Today</h2>
             </div>
           </div>
           <div class="full paddding_left_15">
+            <h3>Goals</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
+              We strive to be the market leader in the services of online
+              virtual investments offering the best of service to our members.
+              Timeous response through our support panel to any requests or
+              queries that may e raised by our members. Ensure ease of use of
+              the system with the provision of dedicated servers to make our
+              system accessible anywhere anytime. Maximum integrity in the
+              handling of member funds to ensure timely payouts are adhered to.
             </p>
           </div>
           <div class="full paddding_left_15">
-            <a class="main_bt" href="#">Exchange ></a>
+            <router-link to="/register"><button class="btn btn-xl btn-outline-light btn-block">Register</button></router-link>
           </div>
         </div>
       </div>
@@ -39,5 +40,7 @@
 export default {};
 </script>
 <style scoped src="@/assets/style.css">
- 
+h {
+  background-color: yellow;
+}
 </style>

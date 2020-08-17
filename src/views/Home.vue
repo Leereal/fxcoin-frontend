@@ -1,9 +1,10 @@
 <template>
   <div>
+    <Slider/>
     <Welcome />
-    <About />
-    <Services />
+    <ThreeColumn/>    
     <Register />
+    <Plans/>
   </div>
 </template>
 
@@ -11,18 +12,18 @@
 // @ is an alias to /src
 import Slider from "@/web/Slider.vue";
 import Welcome from "@/web/Welcome.vue";
-import Services from "@/web/Services.vue";
 import Register from "@/web/Register.vue";
-import About from "@/web/About.vue";
+import ThreeColumn from "@/web/ThreeColumn.vue";
+import Plans from "@/web/Plans.vue";
 
 export default {
   name: "Home",
   components: {
     Slider,
     Welcome,
-    Services,
     Register,
-    About,
+    ThreeColumn,
+    Plans,
   },
 };
 </script>

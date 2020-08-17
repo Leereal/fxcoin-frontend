@@ -1,41 +1,31 @@
 <template>
-       <!-- Start Banner -->
-    <div class="ulockd-home-slider">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="pogoSlider" id="js-main-slider">
-                    <div class="pogoSlider-slide" style="background-image:url(../assets/front/images/slide_img.png);">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="slide_text white_fonts">
-                                        <h3>Progress & Success<br><strong>Currency</strong></h3>
-                                        <br>
-                                        <a class="start_exchange_bt" href="exchange.html">Start Exchange ></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pogoSlider-slide" style="background-image:url(images/slide_img.png);">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="slide_text white_fonts">
-                                        <h3>Progress & Success<br><strong>Currency</strong></h3>
-                                        <br>
-                                        <a class="start_exchange_bt" href="exchange.html">Start Exchange ></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- .pogoSlider -->
-            </div>
+  <div class="container-fluid">
+    <!-- Start Slider -->
+    <div id="slides" class="carousel slide" data-ride="carousel">
+      <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active">MmMm</li>
+        <li data-target="#slides" data-slide-to="1"></li>
+        <li data-target="#slides" data-slide-to="2"></li>
+      </ul>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="../assets/image1.png" alt="caurosel image 1" />
+          <div class="carousel-caption">
+           
+              <button type="button" class="btn btn-lg btn-outline-light ">Login</button>
+              <button type="button" class="btn btn-lg btn-outline-light ">Register Now</button>
+          </div>
         </div>
+        <div class="carousel-item">
+          <img src="../assets/image2.png" alt="caurosel image 2" />
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/image3.png" alt="caurosel image 3" />
+        </div>
+      </div>
     </div>
-    <!-- End Banner -->
+    <!-- End Slider -->
+  </div>
 </template>
 
 <script>

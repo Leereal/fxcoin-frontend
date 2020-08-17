@@ -205,25 +205,26 @@
                     </div>
                     <hr />
                     <div class="form-group">
-                      <label for="package">Package</label>
-                      <select
-                        class="form-control"
-                        id="package"
-                        v-model="form.package_id"
-                        :class="{
-                          'is-invalid': form.errors.has('package_id'),
-                        }"
+                      <div
+                        class="form-check"
+                        v-for="peer_package in peer_packages"
+                        :key="peer_package.id"
                       >
-                        <option value="">Select Package</option>
-                        <option
-                          v-for="plan in plans"
-                          v-bind:key="plan.id"
-                          :value="plan.id"
-                          >{{ plan.name }} - {{ plan.interest }}% in
-                          {{ plan.period }} days</option
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          :value="peer_package.id"
+                          v-model="form.package_id"
+                          :id="'radio' + peer_package.id"
+                        />
+                        <label class="form-check-label"
+                          >{{ peer_package.name }} |
+                          {{ peer_package.interest }}% |{{
+                            peer_package.period
+                          }}
+                          days</label
                         >
-                      </select>
-                      <has-error :form="form" field="package_id"></has-error>
+                      </div>
                     </div>
                     <hr />
                     <div class="card  collapsed-card">
@@ -307,16 +308,7 @@ export default {
     //this.fetchValues();
     //this.fetchPackages();
   },
-  methods: {
-    fetchPackages(page_url) {
-      page_url = page_url || axios.defaults.baseURL + "/api/package";
-      fetch(page_url) //calling the api url for packages data
-        .then((res) => res.json())
-        .then((res) => {
-          this.plans = res.data; //sending data to plans array
-        })
-        .catch((err) => console.log(err));
-    },
+  methods: {   
     fetchValue(form) {
       this.form.market_place_id = form.id;
       this.form.transaction_code = form.transaction_code;
@@ -324,7 +316,7 @@ export default {
       this.form.balance = form.balance;
       this.form.country = form.country;
       this.form.cellphone = form.cellphone;
-      this.form.avatar = form.payment_method_avatar
+      this.form.avatar = form.payment_method_avatar;
       this.form.payment_method_id = form.payment_method_id;
       this.form.amount = "";
       this.form.package_id = "";
@@ -361,16 +353,19 @@ export default {
     market_places() {
       return this.$store.getters.market_places;
     },
-    plans() {
-      return this.$store.getters.plans;
+    peer_packages() {
+      return this.$store.getters.peer_packages;
     },
   },
   mounted() {
     if (this.market_places.length) {
       return;
     }
+    if (this.peer_packages.length) {
+      return;
+    }
     this.$store.dispatch("getMarketPlaces");
-    this.$store.dispatch("getPackages");
+    this.$store.dispatch("getPeerPackages");
   },
 };
 </script>

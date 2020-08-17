@@ -21,6 +21,7 @@ export default {
     payment_details: [],
     countries: [],
     deposit_packages:[],
+    peer_packages:[]
   },
   getters: {
     isLoading(state) {
@@ -55,6 +56,9 @@ export default {
     },
     deposit_packages(state) {
       return state.deposit_packages;     
+    },
+    peer_packages(state) {
+      return state.peer_packages;     
     },
   },
   mutations: {
@@ -102,6 +106,9 @@ export default {
     updateDepositPackages(state, payload) {
       state.deposit_packages = payload;
     },
+    updatePeerPackages(state, payload) {
+      state.peer_packages = payload;
+    },
   },
   actions: {
     login(context) {
@@ -120,6 +127,11 @@ export default {
     getDepositPackages(context) {
       axios.get("/api/deposit-packages").then((response) => {
         context.commit("updateDepositPackages", response.data.data);
+      });
+    },
+    getPeerPackages(context) {
+      axios.get("/api/peer-packages").then((response) => {
+        context.commit("updatePeerPackages", response.data.data);
       });
     },
     getInvestments(context) {

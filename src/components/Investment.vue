@@ -266,10 +266,6 @@
                     <div class="card-body pt-0">
                       <div class="row">
                         <div class="col-12">
-                          <h2 class="lead">
-                            <b>{{ form.payment_method }}</b>
-                          </h2>
-                          <hr />
                           <ul class="ml-4 mb-0 fa-ul text-muted">
                             <li>
                               <img
@@ -312,33 +308,48 @@
                                   type="text"
                                   class="form-control"
                                   id="amount"
+                                  name="amount"
                                   placeholder="Amount"
+                                  v-model="depositForm.amount"
+                                  :class="{
+                                    'is-invalid': depositForm.errors.has('amount'),
+                                  }"
                                 />
+                                <has-error
+                                  :form="depositForm"
+                                  field="amount"
+                                ></has-error>
                               </div>
                             </li>
                             <li>
                               <div class="form-group">
                                 <div
-                                  class="custom-control custom-radio"
+                                  class="form-check"
                                   v-for="deposit_package in deposit_packages"
                                   :key="deposit_package.id"
                                 >
                                   <input
-                                    class="custom-control-input"
+                                    class="form-check-input"
                                     type="radio"
-                                    id="radio1"
-                                    name="radio1"
+                                    :value="deposit_package.id"
+                                    v-model="depositForm.package_id"
+                                    :id="'radio' + deposit_package.id"
+                                    :class="{
+                                    'is-invalid': depositForm.errors.has('package_id'),
+                                  }"
                                   />
-                                  <label
-                                    for="radio1"
-                                    class="custom-control-label"
+                                  <label class="form-check-label"
                                     >{{ deposit_package.name }} |
                                     {{ deposit_package.interest }}% |{{
                                       deposit_package.period
                                     }}
                                     days</label
-                                  >
+                                  >                                  
                                 </div>
+                                <has-error
+                                  :form="depositForm"
+                                  field="package_id"
+                                ></has-error>
                               </div>
                             </li>
                           </ul>
@@ -363,25 +374,25 @@
                             class="form-control"
                             id="image"
                             :class="{
-                              'is-invalid': form.errors.has('comment'),
+                              'is-invalid': depositForm.errors.has('pop'),
                             }"
                           />
-                          <has-error :form="form" field="comment"></has-error>
+                          <has-error :form="depositForm" field="pop"></has-error>
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="form-group">
                           <textarea
-                            v-model="form.comment"
+                            v-model="depositForm.comment"
                             class="form-control"
                             rows="3"
                             placeholder="Enter Your Comment..."
                             style="margin-top: 0px; margin-bottom: 0px; height: 101px;"
                             :class="{
-                              'is-invalid': form.errors.has('comment'),
+                              'is-invalid': depositForm.errors.has('comment'),
                             }"
                           ></textarea>
-                          <has-error :form="form" field="comment"></has-error>
+                          <has-error :form="depositForm" field="comment"></has-error>
                         </div>
                       </div>
                     </div>
@@ -427,21 +438,13 @@ export default {
         due_date: "",
       }),
       depositForm: new Form({
-        account_number: "",
-        transaction_code: "",
-        payment_method: "",
-        balance: "",
-        country: "",
-        cellphone: "",
-        market_place_id: "",
-        payment_method_id: "",
         amount: "",
+        payment_method_id: "1",        
         package_id: "",
         comment: "",
-        avatar: "",
         pop: "",
       }),
-      market_places: [],
+
       payment_details: [],
       imageView: "",
     };
@@ -513,6 +516,37 @@ export default {
       this.tradeForm.balance = form.balance;
       this.tradeForm.due_date = form.due_date;
     },
+    //Deposit Function
+    depositInvestment(){
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Did you pay your deposit?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Proceed.  I did!",
+      }).then((result) => {
+        if (result.value) {
+          this.depositForm.post("/api/investment").then((data) => {
+            this.flashMessage.setStrategy("single");
+            this.flashMessage.success({
+              title: "Succefully Saved",
+              message: "Payment Submitted",
+            });
+          this.$store.dispatch("getInvestments");
+          $("#depositModal").modal("hide");
+          }).catch(function(error) {
+          Swal.fire({
+            icon: "error",
+            title: "Failed!",
+            text: error.response.data.message,
+            footer: "Contact Support if you need help",
+          });
+        });
+        }
+      })
+    },
     //---Add Trade Function--//
     addTrade() {
       Swal.fire({
@@ -546,12 +580,7 @@ export default {
               });
             });
         }
-      });
-      // (err) =>
-      //   this.flashMessage.error({
-      //     title: "Error",
-      //     message: "Please try again or Contact Support",
-      //   });
+      });   
     },
   },
   computed: {
