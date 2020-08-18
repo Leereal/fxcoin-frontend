@@ -59,6 +59,7 @@
             <thead>
               <tr>
                 <th scope="col">Payment Method</th>
+                <th v-if="currentUser.currency_id == 2" scope="col">Branch</th>
                 <th scope="col">Account Number</th>
                 <th scope="col">Actions</th>
               </tr>
@@ -76,6 +77,7 @@
                     width="30"
                   />{{ payment_detail.payment_method }}
                 </td>
+                <td v-if="currentUser.currency_id == 2">{{ payment_detail.branch }}</td>
                 <td>{{ payment_detail.account_number }}</td>
                 <td>
                   <span data-toggle="modal" data-target="#addModal">
@@ -150,8 +152,7 @@
                   :class="{
                     'is-invalid': form.errors.has('payment_method_id'),
                   }"
-                >
-                  <option value="">Select Payment Method</option>
+                >                
                   <option
                     v-for="payment_method in payment_methods"
                     v-bind:key="payment_method.id"
@@ -160,6 +161,20 @@
                   >
                 </select>
                 <has-error :form="form" field="payment_method_id"></has-error>
+              </div>
+              <div class="form-group">
+                <label for="branch">Branch Code</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="branch"
+                  name="branch"
+                  v-model="form.branch"
+                  :class="{
+                    'is-invalid': form.errors.has('branch'),
+                  }"
+                />
+                <has-error :form="form" field="branch"></has-error>
               </div>
               <div class="form-group">
                 <label for="account_number">Account Number</label>
@@ -205,29 +220,13 @@ export default {
         id: "",
         payment_method: "",
         account_number: "",
+        branch: "",
       }),
-
-      payment_methods: [],
-
       pm_id: "",
-
       edit: false,
     };
   },
-  created() {
-    if (this.payment_details.length) {
-      return;
-    }
-    this.$store.dispatch("getPaymentDetails");
-    this.fetchPM();
-  },
-  mounted() {},
-  computed: {
-    payment_details() {
-      return this.$store.getters.payment_details;
-    },
-  },
-  methods: {
+   methods: {
     //---Delete Function--//
     deleteValue(id) {
       Swal.fire({
@@ -267,8 +266,7 @@ export default {
         this.form
           .post("/api/payment-detail")
           .then((data) => {
-            this.form.payment_method = "";
-            this.form.account_number = "";
+           this.form.reset();
             this.flashMessage.setStrategy("single");
             this.flashMessage.success({
               title: "Succefully Saved",
@@ -317,18 +315,29 @@ export default {
       this.form.payment_method = form.payment_method;
       this.form.account_number = form.account_number;
     },
-    //---End EditValue Function--//
-    //---FetchValues Function--//
-    fetchPM() {
-      axios
-        .get("/api/payment-method") //calling the api url for packages data
-        .then((response) => {
-          this.payment_methods = response.data.data;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+    //---End EditValue Function--//   
+  },
+  computed: {
+    payment_details() {
+      return this.$store.getters.payment_details;
+    },
+     payment_methods() {
+      return this.$store.getters.payment_methods;
+    },
+    currentUser() {
+      return this.$store.getters.currentUser;
     },
   },
+  mounted() {
+    if (this.payment_details.length) {
+      return;
+    }    
+    this.$store.dispatch("getPaymentDetails");
+
+    if (this.payment_methods.length) {
+      return;
+    }
+     this.$store.dispatch("getPaymentMethods");
+  },   
 };
 </script>

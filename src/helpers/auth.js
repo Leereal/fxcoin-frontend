@@ -14,7 +14,7 @@ export function login(credentials) {
 }
 
 export function getLocalUser() {
-    const userStr = localStorage.getItem("user");
+    const userStr = sessionStorage.getItem("user");
 
     if(!userStr) {
         return null;

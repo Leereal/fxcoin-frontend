@@ -1,10 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { market_place } from "./modules/market_place";
+// import { market_place } from "./modules/market_place";
 
 Vue.use(Vuex);
 
 import { getLocalUser } from "../helpers/auth";
+// import state from './state';
+// import * as getters from './getters';
+// import * as mutations from './mutations';
+// import * as actions from './actions'
 
 const user = getLocalUser();
 
@@ -21,7 +25,8 @@ export default {
     payment_details: [],
     countries: [],
     deposit_packages:[],
-    peer_packages:[]
+    peer_packages:[],
+    payment_methods:[]
   },
   getters: {
     isLoading(state) {
@@ -60,6 +65,12 @@ export default {
     peer_packages(state) {
       return state.peer_packages;     
     },
+
+    //Getter for all paymentrs methods 
+    payment_methods(state){
+      return state.payment_methods;
+    }
+
   },
   mutations: {
     login(state) {
@@ -74,14 +85,14 @@ export default {
         token: payload.access_token,
       });
 
-      localStorage.setItem("user", JSON.stringify(state.currentUser));
+      sessionStorage.setItem("user", JSON.stringify(state.currentUser));
     },
     loginFailed(state, payload) {
       state.loading = false;
       state.auth_error = payload.error;
     },
     logout(state) {
-      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
       state.isLoggedIn = false;
       state.currentUser = null;
     },
@@ -109,6 +120,11 @@ export default {
     updatePeerPackages(state, payload) {
       state.peer_packages = payload;
     },
+
+     //Set state values for payment methods
+     SET_PAYMENTMETHODS(state,payload){
+       state.payment_methods = payload;
+     }
   },
   actions: {
     login(context) {
@@ -149,9 +165,18 @@ export default {
         context.commit("updatePaymentDetails", response.data.data);
       });
     },
+
+    //Get all countries action
     getCountries(context) {
       axios.get("/api/country").then((response) => {
         context.commit("updateCountries", response.data.data);
+      });
+    },
+    
+    //Get all payment methods action
+    getPaymentMethods(context) {
+      axios.get("/api/user-payment-methods").then((response) => {
+        context.commit("SET_PAYMENTMETHODS", response.data.data);
       });
     },
   },

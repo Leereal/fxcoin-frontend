@@ -46,6 +46,14 @@
               </p>
             </router-link>
           </li>
+           <li class="nav-item">
+            <router-link to="/investments" class="nav-link">
+              <i class="nav-icon fas fa-gift text-red"></i>
+              <p>
+                Direct Deposit
+              </p>
+            </router-link>
+          </li>  
           <li class="nav-item">
             <router-link to="/investments" class="nav-link">
               <i class=" nav-icon fas fa-wallet text-purple"></i>
@@ -77,7 +85,8 @@
                 Offers
               </p>
             </router-link>
-          </li>          
+          </li>   
+                
           <li class="nav-item">
             <router-link to="/user-payment-details" class="nav-link">
               <i class="nav-icon fas fa-info-circle text-blue"></i>
