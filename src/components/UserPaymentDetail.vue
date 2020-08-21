@@ -162,7 +162,7 @@
                 </select>
                 <has-error :form="form" field="payment_method_id"></has-error>
               </div>
-              <div class="form-group">
+              <div v-if="currentUser.currency_id==2" class="form-group">
                 <label for="branch">Branch Code</label>
                 <input
                   type="text"
@@ -177,7 +177,7 @@
                 <has-error :form="form" field="branch"></has-error>
               </div>
               <div class="form-group">
-                <label for="account_number">Account Number</label>
+                <label for="account_number">Account</label>
                 <input
                   type="text"
                   class="form-control"
@@ -341,3 +341,10 @@ export default {
   },   
 };
 </script>
+<style scoped>
+@media (max-width: 576px) {
+  table{
+    font-size: 70%;    
+  }    
+}
+</style>

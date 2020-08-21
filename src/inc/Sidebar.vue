@@ -51,7 +51,9 @@
               <i class="nav-icon fas fa-gift text-red"></i>
               <p>
                 Direct Deposit
+                <span class="right badge badge-danger">Coming Soon</span>
               </p>
+              
             </router-link>
           </li> 
           <li class="nav-item">
@@ -60,6 +62,7 @@
               <p>
                 Market Place
               </p>
+              <span class="right badge badge-danger">Coming Soon</span>
             </router-link>
           </li>
           <li class="nav-item">
@@ -68,6 +71,7 @@
               <p>
                 My Payments
               </p>
+              <span class="right badge badge-danger">Coming Soon</span>
             </router-link>
           </li>
           <li class="nav-item">
@@ -76,6 +80,7 @@
               <p>
                 My Investments
               </p>
+              <span class="right badge badge-danger">Coming Soon</span>
             </router-link>
           </li>
           <li class="nav-item">
@@ -84,6 +89,7 @@
               <p>
                 Offers
               </p>
+              <span class="right badge badge-danger">Coming Soon</span>
             </router-link>
           </li>
           <li class="nav-item">
@@ -124,8 +130,7 @@
                 <router-link to="/profile" class="nav-link">
                   <i class="nav-icon fas fa-user"></i>
                   <p>
-                    Profile
-                    <span class="right badge badge-danger">New</span>
+                    Profile                    
                   </p>
                 </router-link>
               </li>
@@ -145,6 +150,7 @@
                   <p>
                     Referrals Bonus                   
                   </p>
+                  <span class="right badge badge-danger">Coming Soon</span>
                 </router-link>
               </li>
             </ul>
@@ -180,4 +186,8 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.badge{
+  font-size: 60%;
+}
+</style>
