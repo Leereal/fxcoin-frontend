@@ -53,15 +53,7 @@
                 Direct Deposit
               </p>
             </router-link>
-          </li>  
-          <li class="nav-item">
-            <router-link to="/investments" class="nav-link">
-              <i class=" nav-icon fas fa-wallet text-purple"></i>
-              <p>
-                My Investments
-              </p>
-            </router-link>
-          </li>
+          </li> 
           <li class="nav-item">
             <router-link to="/market-place" class="nav-link">
               <i class=" nav-icon fas fa-funnel-dollar text-yellow"></i>
@@ -79,10 +71,26 @@
             </router-link>
           </li>
           <li class="nav-item">
+            <router-link to="/investments" class="nav-link">
+              <i class=" nav-icon fas fa-wallet text-purple"></i>
+              <p>
+                My Investments
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="/offers" class="nav-link">
               <i class="nav-icon fas fa-gift text-red"></i>
               <p>
                 Offers
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/bonus" class="nav-link">
+              <i class=" nav-icon fas fa-money-check-alt text-primary"></i>
+              <p>
+                Other Bonus
               </p>
             </router-link>
           </li>   

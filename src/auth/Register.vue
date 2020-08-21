@@ -131,25 +131,51 @@
                 </div>
                 <has-error :form="form" field="confirm_password"></has-error>
               </div>
-              <div class="form-group">
-                <select
-                  class="form-control"
-                  id="country"
-                  v-model="form.country_id"
-                  placeholder="Select Country"
-                  :class="{
-                    'is-invalid': form.errors.has('country'),
-                  }"
-                >
-                  <option value="">Select Country</option>
-                  <option
-                    v-for="country in countries"
-                    v-bind:key="country.id"
-                    :value="country.id"
-                    >{{ country.name }}</option
-                  >
-                </select>
-                <has-error :form="form" field="country"></has-error>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      id="country"
+                      v-model="form.country_id"
+                      placeholder="Select Country"
+                      :class="{
+                        'is-invalid': form.errors.has('country'),
+                      }"
+                    >
+                      <option value="">Country</option>
+                      <option
+                        v-for="country in countries"
+                        v-bind:key="country.id"
+                        :value="country.id"
+                        >{{ country.name }}</option
+                      >
+                    </select>
+                    <has-error :form="form" field="country"></has-error>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      id="currency"
+                      v-model="form.currency_id"
+                      placeholder="Country"
+                      :class="{
+                        'is-invalid': form.errors.has('currency'),
+                      }"
+                    >
+                      <option value="">Currency</option>
+                      <option
+                        v-for="currency in currencies"
+                        v-bind:key="currency.id"
+                        :value="currency.id"
+                        >{{ currency.name }}</option
+                      >
+                    </select>
+                    <has-error :form="form" field="currency"></has-error>
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col-8">
@@ -220,42 +246,47 @@ export default {
         email: "",
         cellphone: "",
         country_id: "",
+        currency_id: "",
         terms: "",
         ipAddress: "",
         referrer_id: "",
-      }), 
+      }),
       ref: [],
     };
   },
   created() {
-   axios.get("/api/users/"+ this.$route.query.ref) //calling the api url for packages data
-        .then((response) => {
-          this.ref = response.data.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    axios
+      .get("/api/users/" + this.$route.query.ref) //calling the api url for packages data
+      .then((response) => {
+        this.ref = response.data.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
   methods: {
     //---AddValue Function--//
     addValue() {
       this.form.referrer_id = this.ref.id;
       this.form.post("/api/register").then((data) => {
-        Swal.fire("Registration Successful", "You can login now", "success");
+        Swal.fire("Registration Successful", "Check your email and verify registration", "success");
         this.$router.push({ name: "login" });
-      }),
-        (err) =>
+      }).catch(function(error) {
           Swal.fire({
             icon: "error",
             title: "Failed!",
-            text: "Please try again or refresh page",
+            text: "Check if your details are correct and try again",
             footer: "Contact Support if you need help",
           });
+        });
     },
   },
   computed: {
     countries() {
       return this.$store.getters.countries;
+    },
+    currencies() {
+      return this.$store.getters.currencies;
     },
   },
   mounted() {
@@ -263,6 +294,10 @@ export default {
       return;
     }
     this.$store.dispatch("getCountries");
+    if (this.currencies.length) {
+      return;
+    }
+    this.$store.dispatch("getCurrencies");
   },
 };
 </script>

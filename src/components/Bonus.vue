@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Referral Bonus</h1>
+            <h1>Bonus</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -25,70 +25,32 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-body">
-          <div class="row mb-5">
-            <div class="col-sm-12">
-              <div class="input-group">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <span class="ref-label">Referral / Affiliate Link</span>
-                  </div>
-                </div>
-                <input
-                  type="text"
-                  id="referral-link"
-                  class="form-control"
-                  readonly
-                  :value="referralLink"
-                />
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <span
-                      class="btn btn-info btn-sm text-white copy-btn ml-auto fa fa-copy"
-                      @click.stop.prevent="copyReferralLink"
-                    >
-                      Copy
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
               <table class="table table-bordered table-striped col-12">
                 <thead>
                   <tr>
-                    <th>Date Received</th>
-                    <th>Username</th>
-                    <th>Package</th>
+                    <th>Date Received</th>                  
+                    <th>Description</th>
                     <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr
-                    v-for="referral_bonus in referral_bonuses"
-                    :key="referral_bonus.id"
+                    v-for="bonus in bonuses"
+                    :key="bonus.id"
                   >
                     <td>
                       {{
-                        referral_bonus.date_received
+                        bonus.date
                           | moment("dddd, MMMM Do YYYY, h:mm:ss a")
                       }}
-                    </td>
-                    <td>{{ referral_bonus.referral }}</td>
-                    <td>{{ referral_bonus.package }}</td>
-                    <td>${{ referral_bonus.amount }}</td>
+                    </td>                  
+                    <td>{{ bonus.description }}</td>
+                    <td>${{ bonus.amount }}</td>
                   </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Date Received</th>
-                    <th>Username</th>
-                    <th>Package</th>
-                    <th>Amount</th>
-                  </tr>
-                </tfoot>
+                </tbody>                
               </table>
             </div>
             <!-- /.card-body -->
@@ -142,7 +104,7 @@
 export default {
   data() {
     return {
-      referral_bonuses: [],
+     bonuses: [],
       pagination: {},
     };
   },
@@ -193,9 +155,9 @@ export default {
     fetchValues() {
       let vm = this;
       axios
-        .get("/api/user-referral-bonus") //calling the api url for packages data
+        .get("/api/user-bonus") //calling the api url for packages data
         .then((response) => {
-          this.referral_bonuses = response.data.data;
+          this.bonuses = response.data.data;
           vm.makePagination(response.data.meta, response.data.links);
         })
         .catch(function(error) {
@@ -208,10 +170,9 @@ export default {
 </script>
 <style scoped>
 @media (max-width: 576px) {
-  .card-body{
+  table{
     font-size: 70%;
   }
     
 }
 </style>
-

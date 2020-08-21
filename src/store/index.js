@@ -26,7 +26,8 @@ export default {
     countries: [],
     deposit_packages:[],
     peer_packages:[],
-    payment_methods:[]
+    payment_methods:[],
+    currencies:[]
   },
   getters: {
     isLoading(state) {
@@ -64,6 +65,9 @@ export default {
     },
     peer_packages(state) {
       return state.peer_packages;     
+    },
+    currencies(state){
+      return state.currencies
     },
 
     //Getter for all paymentrs methods 
@@ -124,6 +128,9 @@ export default {
      //Set state values for payment methods
      SET_PAYMENTMETHODS(state,payload){
        state.payment_methods = payload;
+     },
+     SET_CURRENCIES(state,payload){
+       state.currencies = payload
      }
   },
   actions: {
@@ -179,5 +186,12 @@ export default {
         context.commit("SET_PAYMENTMETHODS", response.data.data);
       });
     },
+
+    //Get All Currencies
+    getCurrencies(context){
+      axios.get('/api/currency').then((response)=>{
+        context.commit("SET_CURRENCIES",response.data.data)
+      })
+    }
   },
 };

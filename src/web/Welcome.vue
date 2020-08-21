@@ -10,7 +10,7 @@
           targets. FXAuction was established with the idea in mind of helping
           people get quicker returns on their investment so as to be able to
           meet their short-term financial goals! FXAuction is an online
-          investment platform where you can bid and buy virtual coins for a
+          investment platform where you can offer to buy points for a
           selected period with a desired return.
         </p>
         <hr/>

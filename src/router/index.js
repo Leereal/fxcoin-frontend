@@ -15,6 +15,7 @@ import Settings from '../components/Settings.vue';
 import Investment from '../components/Investment.vue';
 import Referral from '../components/Referral.vue';
 import ReferralBonus from '../components/ReferralBonus.vue';
+import Bonus from '../components/Bonus.vue';
 import Trade from '../components/Trade.vue';
 import Offer from '../components/Offer.vue';
 import Login from '../auth/Login.vue';
@@ -126,6 +127,12 @@ const routes = [
     path: "/referral-bonus",
     name: "referral-bonus",
     component: ReferralBonus,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/bonus",
+    name: "bonus",
+    component: Bonus,
     meta: { requiresAuth: true },
   },
   {
