@@ -148,7 +148,7 @@
                         v-for="country in countries"
                         v-bind:key="country.id"
                         :value="country.id"
-                        >{{ country.name }}</option
+                        >{{ country.nicename }}</option
                       >
                     </select>
                     <has-error :form="form" field="country"></has-error>

@@ -110,7 +110,7 @@
             </router-link>
           </li>
           <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
+            <a class="nav-link">
               <i class="nav-icon fa fa-cog text-white"></i>
               <p>
                 Other

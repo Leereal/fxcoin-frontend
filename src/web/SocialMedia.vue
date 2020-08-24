@@ -6,11 +6,11 @@
         <h2>Connect</h2>
       </div>
       <div class="col-12 social padding">
-          <a href="facebook.com"> <i class="fab fa-facebook"></i></a>
-          <a href="facebook.com"> <i class="fab fa-twitter"></i></a>
-          <a href="facebook.com"> <i class="fab fa-whatsapp"></i></a>
-          <a href="facebook.com"> <i class="fab fa-telegram"></i></a>
-          <a href="facebook.com"> <i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/groups/734790064030927"> <i class="fab fa-facebook"></i></a>
+          <a href="https://twitter.com/fx_auction"> <i class="fab fa-twitter"></i></a>
+          <a href="https://chat.whatsapp.com/KY3rO1gZQx0B06y2UaX2wQ"> <i class="fab fa-whatsapp"></i></a>
+          <a href="https://t.me/fxauction"> <i class="fab fa-telegram"></i></a>
+          <a href=""> <i class="fab fa-instagram"></i></a>
       </div>
     </div>
   </div>

@@ -60,7 +60,7 @@
                     {{ totals.payment }}
                     <sup style="font-size: 15px">points</sup>
                   </h3>
-                  <p>Withdrawals: ${{ totals.payment }}</p>
+                  <p>Withdrawals: {{currentUser.currrency_id==2 ? 'R' : '$'}}{{ totals.payment }}</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -81,7 +81,7 @@
                     {{ totals.balance
                     }} <sup style="font-size: 15px">points</sup>
                   </h3>
-                  <p>Balance: ${{ totals.balance }}</p>
+                  <p>Balance: {{currentUser.currrency_id==2 ? 'R' : '$'}}{{ totals.balance }}</p> >
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -122,7 +122,7 @@
                     <sup style="font-size: 15px">points</sup>
                   </h3>
 
-                  <p>Referral Bonus : ${{ totals.referral_bonus }}</p>
+                  <p>Referral Bonus : {{currentUser.currrency_id==2 ? 'R' : '$'}}{{ totals.referral_bonus }}</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
@@ -250,7 +250,7 @@
                         >{{investment.package}}
                         <span class="float-right"
                         :class="[investment.status!=1 ? ' badge badge-primary' :'badge badge-success']"
-                          >${{investment.balance}}</span
+                          >{{currentUser.currrency_id==2 ? 'R' : '$'}}{{investment.balance}}</span
                         ></a
                       >
                       <span class="product-description">
@@ -274,7 +274,7 @@
           <div class="col-md-4">
             <!-- Info Boxes Style 2 -->
             <div class="info-box mb-3 bg-twitter">
-              <router-link to="www.twitter.com">
+              <router-link to="https://twitter.com/fx_auction">
                 <span class="info-box-icon"
                   ><i class="fab fa-twitter"></i
                 ></span>
@@ -288,7 +288,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-facebook">
-              <router-link to="www.facebook.com">
+              <router-link to="https://www.facebook.com/groups/734790064030927">
                 <span class="info-box-icon"
                   ><i class="fab fa-facebook"></i
                 ></span>
@@ -302,7 +302,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-telegram">
-              <router-link to="www.telegram.com">
+              <router-link to="https://t.me/fxauction">
                 <span class="info-box-icon"
                   ><i class="fab fa-telegram"></i
                 ></span>
@@ -316,7 +316,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-green">
-              <router-link to="www.whatsapp.com">
+              <router-link to="https://chat.whatsapp.com/KY3rO1gZQx0B06y2UaX2wQ">
                 <span class="info-box-icon"
                   ><i class="fab fa-whatsapp"></i
                 ></span>
