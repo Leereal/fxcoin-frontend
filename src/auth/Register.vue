@@ -83,7 +83,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Mobile Number"
+                  placeholder="Mobile Number eg: +27621234567"
                   name="cellphone"
                   v-model="form.cellphone"
                   :class="{

@@ -17,11 +17,11 @@
           <div class="full paddding_left_15">
             <h3>Goals</h3>
             <p>
-              We strive to be the market leader in the services of online
-              virtual investments offering the best of service to our members.
+              We strive to be the market leader in the provision of online
+              virtual investments services offering the best of service to our members.
               Timeous response through our support panel to any requests or
-              queries that may e raised by our members. Ensure ease of use of
-              the system with the provision of dedicated servers to make our
+              queries that may be raised by our members. Ensure ease of use of
+              the system through the provision of dedicated servers to make our
               system accessible anywhere anytime. Maximum integrity in the
               handling of member funds to ensure timely payouts are adhered to.
             </p>

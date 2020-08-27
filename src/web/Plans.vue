@@ -8,7 +8,7 @@
         <div class="info-box bg-gradient-warning">
           <span class="info-box-icon"><img src="../assets/25.png" alt="" width="50"></span>
           <div class="info-box-content">
-            <span class="info-box-text">Minimum Deposit : $10</span>
+            <span class="info-box-text">Minimum Deposit : $10 or R150</span>
             <span class="info-box-number">Gold</span>
 
             <div class="progress">
@@ -26,7 +26,7 @@
         <div class="info-box bg-gradient-primary">
           <span class="info-box-icon"><img src="../assets/60.png" alt="" width="50"></span>
           <div class="info-box-content">
-            <span class="info-box-text">Minimum Deposit : $10</span>
+            <span class="info-box-text">Minimum Deposit : $10 or R150</span>
             <span class="info-box-number">Diamond</span>
 
             <div class="progress">
@@ -44,7 +44,7 @@
         <div class="info-box bg-gradient-success">
           <span class="info-box-icon"><img src="../assets/130.png" alt="" width="50"></span>
           <div class="info-box-content">
-            <span class="info-box-text">Minimum Deposit : $10</span>
+            <span class="info-box-text">Minimum Deposit : $10 or R150</span>
             <span class="info-box-number">Platinum</span>
 
             <div class="progress">
@@ -68,7 +68,7 @@
         <div class="info-box bg-gradient-warning">
           <span class="info-box-icon"><img src="../assets/30.png" alt="" width="50"></span>
           <div class="info-box-content">
-            <span class="info-box-text">Minimum Deposit : $20</span>
+            <span class="info-box-text">Minimum Deposit : $20 or R300</span>
             <span class="info-box-number">Pool Gold</span>
 
             <div class="progress">
@@ -86,7 +86,7 @@
         <div class="info-box bg-gradient-primary">
           <span class="info-box-icon"><img src="../assets/66.png" alt="" width="50"></span>
           <div class="info-box-content">
-            <span class="info-box-text">Minimum Deposit : $20</span>
+            <span class="info-box-text">Minimum Deposit : $20 or R300</span>
             <span class="info-box-number">Pool Diamond</span>
 
             <div class="progress">
@@ -104,7 +104,7 @@
         <div class="info-box bg-gradient-success">
           <span class="info-box-icon"><img src="../assets/190.png" alt="" width="50"></span>
           <div class="info-box-content">
-            <span class="info-box-text">Minimum Deposit : $20</span>
+            <span class="info-box-text">Minimum Deposit : $20 or R300</span>
             <span class="info-box-number">Pool Platinum</span>
 
             <div class="progress">

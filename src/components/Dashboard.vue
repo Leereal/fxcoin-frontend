@@ -60,7 +60,7 @@
                     {{ totals.payment }}
                     <sup style="font-size: 15px">points</sup>
                   </h3>
-                  <p>Withdrawals: {{currentUser.currrency_id==2 ? 'R' : '$'}}{{ totals.payment }}</p>
+                  <p>Withdrawals: {{currentUser.currency_id==2 ? 'R' : '$'}}{{ totals.payment }}</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -81,7 +81,7 @@
                     {{ totals.balance
                     }} <sup style="font-size: 15px">points</sup>
                   </h3>
-                  <p>Balance: {{currentUser.currrency_id==2 ? 'R' : '$'}}{{ totals.balance }}</p> >
+                  <p>Balance: {{currentUser.currency_id==2 ? 'R' : '$'}}{{ totals.balance }}</p> 
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -122,7 +122,7 @@
                     <sup style="font-size: 15px">points</sup>
                   </h3>
 
-                  <p>Referral Bonus : {{currentUser.currrency_id==2 ? 'R' : '$'}}{{ totals.referral_bonus }}</p>
+                  <p>Referral Bonus : {{currentUser.currency_id==2 ? 'R' : '$'}}{{ totals.referral_bonus }}</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
@@ -250,7 +250,7 @@
                         >{{investment.package}}
                         <span class="float-right"
                         :class="[investment.status!=1 ? ' badge badge-primary' :'badge badge-success']"
-                          >{{currentUser.currrency_id==2 ? 'R' : '$'}}{{investment.balance}}</span
+                          >{{currentUser.currency_id==2 ? 'R' : '$'}}{{investment.balance}}</span
                         ></a
                       >
                       <span class="product-description">
@@ -274,7 +274,7 @@
           <div class="col-md-4">
             <!-- Info Boxes Style 2 -->
             <div class="info-box mb-3 bg-twitter">
-              <router-link to="https://twitter.com/fx_auction">
+              <a href="https://twitter.com/fx_auction">
                 <span class="info-box-icon"
                   ><i class="fab fa-twitter"></i
                 ></span>
@@ -284,11 +284,11 @@
                   <span class="info-box-number">Follow Us</span>
                 </div>
                 <!-- /.info-box-content -->
-              </router-link>
+              </a>
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-facebook">
-              <router-link to="https://www.facebook.com/groups/734790064030927">
+              <a href="https://www.facebook.com/groups/734790064030927">
                 <span class="info-box-icon"
                   ><i class="fab fa-facebook"></i
                 ></span>
@@ -298,11 +298,11 @@
                   <span class="info-box-number">Join Now</span>
                 </div>
                 <!-- /.info-box-content -->
-              </router-link>
+              </a>
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-telegram">
-              <router-link to="https://t.me/fxauction">
+              <a href="https://t.me/fxauction">
                 <span class="info-box-icon"
                   ><i class="fab fa-telegram"></i
                 ></span>
@@ -312,11 +312,11 @@
                   <span class="info-box-number">Join Now</span>
                 </div>
                 <!-- /.info-box-content -->
-              </router-link>
+              </a>
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-green">
-              <router-link to="https://chat.whatsapp.com/KY3rO1gZQx0B06y2UaX2wQ">
+              <a href="https://chat.whatsapp.com/KY3rO1gZQx0B06y2UaX2wQ">
                 <span class="info-box-icon"
                   ><i class="fab fa-whatsapp"></i
                 ></span>
@@ -325,7 +325,7 @@
                   <span class="info-box-text">WhatsApp Group</span>
                   <span class="info-box-number">Join Now</span>
                 </div>
-              </router-link>
+              </a>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
@@ -427,5 +427,8 @@ export default {
 .bg-facebook {
   background-color: #3b5998;
   color: white;
+}
+.fab{
+  color:white;
 }
 </style>

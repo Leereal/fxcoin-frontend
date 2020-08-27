@@ -5,7 +5,7 @@
       <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
         <p class="lead">
           FXAuction is an international peer to peer and pool crowdfunding
-          platform. Bank investment take very long to mature and the Return On
+          platform. Bank investments take very long to mature and the Return On
           Investment is far way too low for the said period to meet the desired
           targets. FXAuction was established with the idea in mind of helping
           people get quicker returns on their investment so as to be able to
@@ -17,12 +17,11 @@
         <h4 class="display-4 text-center">Our Plans</h4>        
         <p class="text-center">
           We have 3 investments plans that fall in 2 different categories
-          tailored to meet differing investment needs. We have a peer to peer
-          category and the Pool category. On the peer to peer category, members
-          will be sending and receiving payments among themselves through an
-          auction process of bidding and buying. The pool category enables
+          tailored to meet differing investment needs. We have a Peer to Peer
+          Category and the Pool Category. On the Peer to Peer Category, members
+          will be sending and receiving payments among themselves through market place process of selling and buying. The Pool category enables
           members to make their contributions into one trading pool where the
-          money is traded on the forex market for it to generate more profits.
+          money is traded on the forex market and bianry options for it to generate more profits.
           This makes the pool option more favorable since it results in higher
           percentage returns.
         </p>
@@ -38,7 +37,7 @@
     <div class="row welcome text-center mt-5">
       <div class="col-12">
         <h1 class="display-4">
-          Investment today is a source oof income tomorrow
+          Investment today is a source of income tomorrow
         </h1>
         <h3>Why Us?</h3>
       </div>
@@ -46,14 +45,14 @@
       <div class="col-12">
         <p class="lead">
           FXAuction is engineered with a different concept where by it is backed
-          by Forex trading which makes it standout among ordinary peer to peer
+          by Forex trading and Binary Options which makes it standout among ordinary peer to peer
           platforms. FXAuction gives you the users an option to choose between
           peer to peer platform or use the pool option from which the percentage
           return is higher since the money will have been traded to generate
           more profits. We have tried our best to incorporate everyone into the
           system through the inclusion of various flexible payment methods some
           of which will continue to be added from time to time up until everyone
-          fits in
+          fits in.
         </p>
       </div>
     </div>

@@ -9,8 +9,8 @@
       </ul>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../assets/home.jpg" alt="caurosel image 1" />
-          <div class="carousel-caption">
+          <img  class="img-fluid" src="../assets/home.jpg" alt="caurosel image 1" />
+          <div class="carousel-caption first-caption">
             <h1>FXAuction</h1>
             <h3>Investment today is a source of income tomorrow</h3>
             <router-link to="/register">
@@ -107,6 +107,10 @@ export default {};
   .carousel-caption {
     top: 40%;
   }
+  .first-caption {
+    top: 25%;
+  }
+  
   .carousel-caption h1 {
     font-size: 250%;
   }
