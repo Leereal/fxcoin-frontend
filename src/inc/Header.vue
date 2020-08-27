@@ -22,7 +22,7 @@
           data-toggle="dropdown"
           aria-expanded="true"
         >
-          <img src="../assets/image.jpg" class="user-image" alt="User Image" />
+          <img src="../assets/user.png" class="user-image" alt="User Image" />
           <span class="hidden-xs">{{
             currentUser.name + " " + currentUser.surname
           }}</span>
@@ -31,7 +31,7 @@
           <!-- User image -->
           <li class="user-header">
             <img
-              src="../assets/image.jpg"
+              src="../assets/user.png"
               class="img-circle"
               alt="User Image"
             />

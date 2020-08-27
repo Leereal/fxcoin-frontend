@@ -173,19 +173,19 @@ export default {
     updateValue() {     
       Swal.fire({
         title: "Are you sure?",
-        text: "Did you make the required amount",
+        text: "Do you really want to change it?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Proceed.  I did!",
+        confirmButtonText: "Yes, Proceed.  I do!",
       }).then((result) => {
         if (result.value) {
           this.form.post("/api/update-profile").then((data) => {
             this.flashMessage.setStrategy("single");
             this.flashMessage.success({
               title: "Succefully Saved",
-              message: "Payment Submitted",
+              message: "Profile Updated",
             });
             this.fetchValues();
           });
