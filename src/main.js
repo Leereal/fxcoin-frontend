@@ -33,7 +33,7 @@ import {initialize} from './helpers/general';
 
 window.axios = require('axios');
 // window.axios.defaults.baseURL = 'http://199.192.25.181';
- //window.axios.defaults.baseURL = 'http://192.168.0.108';
+ window.axios.defaults.baseURL = 'http://192.168.0.108';
 
 Vue.prototype.$ipAdr = 'https://www.fxauction.trade'
 

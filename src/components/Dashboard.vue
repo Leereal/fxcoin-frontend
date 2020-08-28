@@ -51,6 +51,35 @@
           </div>
         </div>
         <div class="row mt-3">
+          <div class="col-sm-12">
+            <p>*Please use your short link to market on Facebook. If short link is blank contact support</p>
+            <div class="input-group">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="ref-label">Short Referral Link</span>
+                </div>
+              </div>
+              <input
+                type="text"
+                id="short-link"
+                class="form-control"
+                readonly
+                :value="currentUser.shortlink"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span
+                    class="btn btn-info btn-sm text-white copy-btn ml-auto fa fa-copy"
+                    @click.stop.prevent="copyShortLink"
+                  >
+                    Copy
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
           <div class="col-lg-3 col-12">
             <router-link to="/trade">
               <!-- small box -->
@@ -343,7 +372,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+
+    };
   },
   created() {
     this.fetchValues();
@@ -356,7 +387,7 @@ export default {
     this.$store.dispatch("getTotals");
     this.$store.dispatch("getInvestments");
   },
-  methods: {
+  methods: { 
     //---FetchValues Function--//
     fetchValues() {
       axios
@@ -384,6 +415,22 @@ export default {
         alert("Oops, unable to copy");
       }
     },
+    copyShortLink() {
+      let shortLinkToCopy = document.querySelector("#short-link");
+      shortLinkToCopy.setAttribute("type", "text");
+      shortLinkToCopy.select();
+
+      try {
+        var successful = document.execCommand("copy");
+        this.flashMessage.setStrategy("single");
+        this.flashMessage.success({
+          title: "Succefully Copied",
+          message: "Short Link was successfully copied to clipboard",
+        });
+      } catch (err) {
+        alert("Oops, unable to copy");
+      }
+    },
   },
   mounted() {
    
@@ -400,7 +447,7 @@ export default {
     },
     referralLink() {
       return this.$ipAdr + "/register?ref=" + this.currentUser.username;
-    },
+    },    
   },
 };
 </script>

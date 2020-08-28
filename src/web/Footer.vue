@@ -27,13 +27,7 @@
                             <div class="full">
                                 <div class="footer_blog full white_fonts">
                              <h3>Forex</h3>
-                             <p>Make money, learn and earn at the same time. It's not too late to change your lifestyle</p>
-                             <div class="newsletter_form">
-                                <form>
-                                   <input type="email" placeholder="Your Email" name="#" required="">
-                                   <button>Submit</button>
-                                </form>
-                             </div>
+                             <p>Make money, learn and earn at the same time. It's not too late to change your lifestyle</p>                             
                          </div>
                             </div>
                         </div>
@@ -41,10 +35,8 @@
                             <div class="full">
                                 <div class="footer_blog full white_fonts">
                              <h3>Contact us</h3>
-                             <ul class="full">
-                               <li><img src="../assets/front/images/i5.png"><span>300 Madison Ave,<br> New York, NY 10017, <br>United States</span></li>
-                               <li><img src="../assets/front/images/i6.png"><span>info@fxauction.com</span></li>
-                               <li><img src="../assets/front/images/i7.png"><span>+1 440 230 6276</span></li>
+                             <ul class="full">                               
+                               <li><img src="../assets/front/images/i6.png"><span>info@fxauction.com</span></li>                       
                              </ul>
                          </div>
                             </div>
