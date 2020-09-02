@@ -60,6 +60,7 @@
               <tr>
                 <th scope="col">Payment Method</th>
                 <th v-if="currentUser.currency_id == 2" scope="col">Branch</th>
+                <th scope="col">Account Name Holder</th>
                 <th scope="col">Account Number</th>
                 <th scope="col">Actions</th>
               </tr>
@@ -78,6 +79,7 @@
                   />{{ payment_detail.payment_method }}
                 </td>
                 <td v-if="currentUser.currency_id == 2">{{ payment_detail.branch }}</td>
+                <td>{{ payment_detail.account_holder }}</td>
                 <td>{{ payment_detail.account_number }}</td>
                 <td>
                   <span data-toggle="modal" data-target="#addModal">
@@ -177,6 +179,20 @@
                 <has-error :form="form" field="branch"></has-error>
               </div>
               <div class="form-group">
+                <label for="account_holder">Account Name Holder</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="account_holder"
+                  name="account_holder"
+                  v-model="form.account_holder"
+                  :class="{
+                    'is-invalid': form.errors.has('account_holder'),
+                  }"
+                />
+                <has-error :form="form" field="account_holder"></has-error>
+              </div>
+              <div class="form-group">
                 <label for="account_number">Account</label>
                 <input
                   type="text"
@@ -220,6 +236,7 @@ export default {
         id: "",
         payment_method: "",
         account_number: "",
+        account_holder: "",
         branch: "",
       }),
       pm_id: "",
