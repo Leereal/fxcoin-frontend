@@ -48,7 +48,7 @@
                       }}
                     </td>                  
                     <td>{{ bonus.description }}</td>
-                    <td>${{ bonus.amount }}</td>
+                    <td>{{currentUser.currency_id==2 ? 'R' : '$'}}{{ bonus.amount }}</td>
                   </tr>
                 </tbody>                
               </table>

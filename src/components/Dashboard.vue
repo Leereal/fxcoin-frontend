@@ -35,7 +35,7 @@
                 id="referral-link"
                 class="form-control"
                 readonly
-                :value="currentUser.referral_link"
+                :value="referralLink"
               />
               <div class="input-group-append">
                 <div class="input-group-text">
@@ -444,7 +444,14 @@ export default {
     },
     investments() {
       return this.$store.getters.investments;
-    },     
+    }, 
+    referralLink() {
+      return (
+        this.$ipAdr +
+        "/register?ref=" +
+        this.$store.getters.currentUser.username
+      );
+    },    
   },
 };
 </script>

@@ -331,6 +331,8 @@ export default {
       this.form.id = form.id;
       this.form.payment_method = form.payment_method;
       this.form.account_number = form.account_number;
+      this.form.account_holder = form.account_holder;
+      this.form.branch = form.branch;
     },
     //---End EditValue Function--//   
   },
