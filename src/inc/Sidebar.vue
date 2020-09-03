@@ -119,6 +119,14 @@
             </a>
             <ul v-if="currentUser.id ==1" class="nav nav-treeview">
               <li class="nav-item">
+                <router-link to="/members" class="nav-link">
+                  <i class="fa fa-circle nav-icon"></i>
+                  <p>Members</p>
+                </router-link>
+              </li>
+            </ul>
+            <ul v-if="currentUser.id ==1" class="nav nav-treeview">
+              <li class="nav-item">
                 <router-link to="/settings" class="nav-link">
                   <i class="fa fa-circle nav-icon"></i>
                   <p>Settings</p>
