@@ -33,8 +33,14 @@
             class="alert alert-success"
             role="alert"
           >
-            Market Place is closed at the moment. Opening times are 4 AM, 10 AM,
-            4 PM and 10 PM (GMT)
+            Please note that for the first week you can only buy points from the
+            system through Buy Points from System since there is no one to directly buy
+            the coins from. It is only after their maturity after 7 days that
+            these points will be sold on the market place that the Market Place
+            will be able to be opened for everyone to make their open bids from
+            there. 
+            <!-- Market Place is closed at the moment. Opening times are 4 AM, 10 AM,
+            4 PM and 10 PM (GMT) -->
           </div>
           <div v-else class="row d-flex align-items-stretch">
             <!-- Start Card for Offers -->
@@ -84,9 +90,6 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="#" class="btn btn-sm bg-teal">
-                      <i class="fas fa-comments"> 2</i>
-                    </a>
                     <button
                       @click="fetchValue(market_place)"
                       class="btn btn-sm btn-primary"
@@ -162,7 +165,7 @@
                             <span class="fa-li"
                               ><i class="fas fa-piggy-bank"></i
                             ></span>
-                            Account Number: {{ form.account_number }}
+                            Account Number: ######
                           </li>
                           <li>
                             <span class="fa-li"
@@ -174,7 +177,7 @@
                             <span class="fa-li"
                               ><i class="fas fa-lg fa-phone"></i
                             ></span>
-                            Phone #: {{ form.cellphone }}
+                            Phone #: ######
                           </li>
                         </ul>
                       </div>
@@ -308,7 +311,7 @@ export default {
     //this.fetchValues();
     //this.fetchPackages();
   },
-  methods: {   
+  methods: {
     fetchValue(form) {
       this.form.market_place_id = form.id;
       this.form.transaction_code = form.transaction_code;

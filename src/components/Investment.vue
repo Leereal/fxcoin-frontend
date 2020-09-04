@@ -32,7 +32,7 @@
               data-toggle="modal"
               data-target="#depositModal"
             >
-              <i class="fas fa-money-check-alt"></i> Direct Deposit
+              <i class="fas fa-money-check-alt"></i> Buy Points / Pool Deposit
             </button>
             <button
               type="button"
@@ -283,7 +283,7 @@
                                   id="btcAddress"
                                   class="form-control"
                                   readonly
-                                  value="ynzomw87rhndu74jfnsmmskjri9578udnru8jieu78"
+                                  value="1P3D1Cs2GoEf2HFWyhvhddXTTFi9sDwDMD"
                                 />
                                 <div class="input-group-append">
                                   <div class="input-group-text">
@@ -301,6 +301,15 @@
                               Please click copy button to copy the BTC Address
                               correctly
                             </li>
+                            <hr>
+                            <li>
+                              Skril Deposit: fxauction.pool@gmail.com
+                            </li>
+                            <hr>
+                            <li>
+                             Neteller Deposit: fxauction.pool@gmail.com
+                            </li>
+                            <hr>
                             <li>
                               <div class="form-group">
                                 <label for="amount">Amount</label>

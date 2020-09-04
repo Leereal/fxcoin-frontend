@@ -43,15 +43,7 @@
               title="Collapse"
             >
               <i class="fas fa-minus"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-tool"
-              data-card-widget="remove"
-              title="Remove"
-            >
-              <i class="fas fa-times"></i>
-            </button>
+            </button>           
           </div>
         </div>
         <div class="card-body">
@@ -78,7 +70,9 @@
                     width="30"
                   />{{ payment_detail.payment_method }}
                 </td>
-                <td v-if="currentUser.currency_id == 2">{{ payment_detail.branch }}</td>
+                <td v-if="currentUser.currency_id == 2">
+                  {{ payment_detail.branch }}
+                </td>
                 <td>{{ payment_detail.account_holder }}</td>
                 <td>{{ payment_detail.account_number }}</td>
                 <td>
@@ -94,18 +88,7 @@
                     >
                       <i class="fa fa-edit"></i>
                     </button>
-                  </span>
-                  <button
-                    @click="deleteValue(payment_detail.id)"
-                    class="btn btn-danger btn-sm rounded-0"
-                    type="button"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Delete"
-                    data-original-title="Delete"
-                  >
-                    <i class="fa fa-trash"></i>
-                  </button>
+                  </span>                 
                 </td>
               </tr>
             </tbody>
@@ -126,12 +109,13 @@
       role="dialog"
       aria-labelledby="addModalTitle"
       aria-hidden="true"
+      ref="modal"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content bg-primary">
           <div class="modal-header">
             <h5 class="modal-title" id="addModalTitle">
-              Add Payment Details
+              {{ modalTitle }}
             </h5>
             <button
               type="button"
@@ -146,7 +130,9 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="payment_method">Payment Method</label>
+                <input v-if="edit" type="text" disabled class="form-control" :value="p_m"/>
                 <select
+                  v-else
                   class="form-control"
                   id="payment_method"
                   v-model="form.payment_method_id"
@@ -154,7 +140,7 @@
                   :class="{
                     'is-invalid': form.errors.has('payment_method_id'),
                   }"
-                >                
+                >
                   <option
                     v-for="payment_method in payment_methods"
                     v-bind:key="payment_method.id"
@@ -164,7 +150,7 @@
                 </select>
                 <has-error :form="form" field="payment_method_id"></has-error>
               </div>
-              <div v-if="currentUser.currency_id==2" class="form-group">
+              <div v-if="currentUser.currency_id == 2" class="form-group">
                 <label for="branch">Branch Code</label>
                 <input
                   type="text"
@@ -241,41 +227,11 @@ export default {
       }),
       pm_id: "",
       edit: false,
+      modalTitle: "Add Payment Details",
+      p_m:""
     };
   },
-   methods: {
-    //---Delete Function--//
-    deleteValue(id) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-        if (result.value) {
-          fetch(axios.defaults.baseURL + "/api/payment-detail/" + id, {
-            method: "delete",
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
-              this.$store.dispatch("getPaymentDetails");
-            })
-            .catch((err) =>
-              Swal.fire({
-                icon: "error",
-                title: "Failed!",
-                text: "Please check if your balance is enough",
-                footer: "Contact Support if you need help",
-              })
-            );
-        }
-      });
-    },
-    //---End Delete Function--//
+  methods: {   
     //---AddValue Function--//
     addValue() {
       if (this.edit === false) {
@@ -283,11 +239,11 @@ export default {
         this.form
           .post("/api/payment-detail")
           .then((data) => {
-           this.form.reset();
+            this.form.reset();
             this.flashMessage.setStrategy("single");
             this.flashMessage.success({
               title: "Succefully Saved",
-              message: "Trade Created",
+              message: "Payment Details Added",
             });
             this.$store.dispatch("getPaymentDetails");
             $("#addModal").modal("hide");
@@ -296,7 +252,7 @@ export default {
             Swal.fire({
               icon: "error",
               title: "Failed!",
-              text: "Please check if your balance is enough",
+              text: "Please check if your details are correct",
               footer: "Contact Support if you need help",
             })
           );
@@ -307,19 +263,21 @@ export default {
 
           .put("/api/payment-detail/" + this.form.id)
           .then((data) => {
-            this.form.payment_method = "";
-            this.form.account_number = "";
-            Swal.fire("Good job!", "Saved Successfully", "success");
-            //this.fetchValues();
+            this.flashMessage.setStrategy("single");
+            this.flashMessage.success({
+              title: "Succefully Saved",
+              message: "Payment details Updated",
+            });
+            this.$store.dispatch("getPaymentDetails");
+            $("#addModal").modal("hide");
           })
-          .catch(
+          .catch((err) =>
             Swal.fire({
               icon: "error",
               title: "Failed!",
-              text: "Please try again or refresh page",
+              text: "Please check if your details are correct",
               footer: "Contact Support if you need help",
-            }),
-            (err) => console.log(err)
+            })
           );
       }
       //End Update Values
@@ -329,18 +287,19 @@ export default {
     editValue(form) {
       this.edit = true;
       this.form.id = form.id;
-      this.form.payment_method = form.payment_method;
       this.form.account_number = form.account_number;
       this.form.account_holder = form.account_holder;
       this.form.branch = form.branch;
+      this.p_m = form.payment_method;
+      this.modalTitle = "Edit Payment Details";
     },
-    //---End EditValue Function--//   
+    //---End EditValue Function--//
   },
   computed: {
     payment_details() {
       return this.$store.getters.payment_details;
     },
-     payment_methods() {
+    payment_methods() {
       return this.$store.getters.payment_methods;
     },
     currentUser() {
@@ -350,20 +309,25 @@ export default {
   mounted() {
     if (this.payment_details.length) {
       return;
-    }    
+    }
     this.$store.dispatch("getPaymentDetails");
 
     if (this.payment_methods.length) {
       return;
     }
-     this.$store.dispatch("getPaymentMethods");
-  },   
+    this.$store.dispatch("getPaymentMethods");
+
+     $(this.$refs.modal).on('hidden.bs.modal', () => {
+        this.form.reset();
+        this.edit=false;
+    });
+  },
 };
 </script>
 <style scoped>
 @media (max-width: 576px) {
-  table{
-    font-size: 70%;    
-  }    
+  table {
+    font-size: 70%;
+  }
 }
 </style>

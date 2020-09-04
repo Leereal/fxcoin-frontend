@@ -3,11 +3,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <router-link to="/home" class="brand-link text-center">
-      <img
-        src="../assets/logo.png"
-        alt="Logo" 
-        height="30" 
-      />      
+      <img src="../assets/logo.png" alt="Logo" height="30" />
     </router-link>
 
     <!-- Sidebar -->
@@ -46,23 +42,22 @@
               </p>
             </router-link>
           </li>
-           <li class="nav-item">
+          <li class="nav-item">
             <router-link to="/investments" class="nav-link">
               <i class="nav-icon fas fa-gift text-red"></i>
               <p>
-                Direct Deposit
-                <span class="right badge badge-danger">Coming Soon</span>
+                Buy Points From System
+                <!-- <span class="right badge badge-danger">Coming Soon</span> -->
               </p>
-              
             </router-link>
-          </li> 
+          </li>
           <li class="nav-item">
             <router-link to="/market-place" class="nav-link">
               <i class=" nav-icon fas fa-funnel-dollar text-yellow"></i>
               <p>
                 Market Place
               </p>
-              <span class="right badge badge-danger">Coming Soon</span>
+              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
             </router-link>
           </li>
           <li class="nav-item">
@@ -71,7 +66,7 @@
               <p>
                 My Payments
               </p>
-              <span class="right badge badge-danger">Coming Soon</span>
+              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
             </router-link>
           </li>
           <li class="nav-item">
@@ -80,7 +75,7 @@
               <p>
                 My Investments
               </p>
-              <span class="right badge badge-danger">Coming Soon</span>
+              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
             </router-link>
           </li>
           <li class="nav-item">
@@ -89,7 +84,40 @@
               <p>
                 Offers
               </p>
-              <span class="right badge badge-danger">Coming Soon</span>
+              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/profile" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Profile
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/user-payment-details" class="nav-link">
+              <i class="nav-icon fas fa-info-circle text-blue"></i>
+              <p>
+                Payment Details
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/referrals" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Referrals
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/referral-bonus" class="nav-link">
+              <i class="nav-icon fas fa-gift"></i>
+              <p>
+                Referrals Bonus
+              </p>
+              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
             </router-link>
           </li>
           <li class="nav-item">
@@ -99,17 +127,8 @@
                 Other Bonus
               </p>
             </router-link>
-          </li>   
-                
-          <li class="nav-item">
-            <router-link to="/user-payment-details" class="nav-link">
-              <i class="nav-icon fas fa-info-circle text-blue"></i>
-              <p>
-                Payment Details
-              </p>
-            </router-link>
           </li>
-          <li class="nav-item has-treeview">
+          <li v-if="currentUser.id == 1" class="nav-item has-treeview">
             <a class="nav-link">
               <i class="nav-icon fa fa-cog text-white"></i>
               <p>
@@ -117,7 +136,7 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul v-if="currentUser.id ==1" class="nav nav-treeview">
+            <ul v-if="currentUser.id == 1" class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/members" class="nav-link">
                   <i class="fa fa-circle nav-icon"></i>
@@ -125,7 +144,7 @@
                 </router-link>
               </li>
             </ul>
-            <ul v-if="currentUser.id ==1" class="nav nav-treeview">
+            <ul v-if="currentUser.id == 1" class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/settings" class="nav-link">
                   <i class="fa fa-circle nav-icon"></i>
@@ -133,35 +152,7 @@
                 </router-link>
               </li>
             </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <router-link to="/profile" class="nav-link">
-                  <i class="nav-icon fas fa-user"></i>
-                  <p>
-                    Profile                    
-                  </p>
-                </router-link>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <router-link to="/referrals" class="nav-link">
-                  <i class="nav-icon fas fa-users"></i>
-                  <p>
-                    Referrals                   
-                  </p>
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/referral-bonus" class="nav-link">
-                  <i class="nav-icon fas fa-gift"></i>
-                  <p>
-                    Referrals Bonus                   
-                  </p>
-                  <span class="right badge badge-danger">Coming Soon</span>
-                </router-link>
-              </li>
-            </ul>
+            <ul class="nav nav-treeview"></ul>
           </li>
           <li class="nav-item">
             <a href="" class="nav-link" @click.prevent="logout">
@@ -195,7 +186,7 @@ export default {
 };
 </script>
 <style scoped>
-.badge{
+.badge {
   font-size: 60%;
 }
 </style>
