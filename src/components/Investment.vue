@@ -60,7 +60,7 @@
                     ]"
                   >
                     <span class="username">
-                      <b>Initial Amount</b> | ${{ investment.amount }}
+                      <b>Initial Amount</b> | {{currentUser.currency_id==2 ? 'R' : '$'}}{{ investment.amount }}
                       | Balance:
                       <span>$ {{ investment.balance }}</span>
                     </span>
