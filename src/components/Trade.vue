@@ -26,7 +26,7 @@
       <div class="card card-solid">
         <div class="card-header">
           <h3 class="card-title">Pending Payments</h3>
-          <div class="card-tools">           
+          <div class="card-tools">
             <button
               type="button"
               class="btn btn-tool"
@@ -53,17 +53,22 @@
                       alt="User Image"
                     />
                     <span class="username">
-                      {{ market_place.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
-                    }}{{
-                        market_place.amount
-                      }}
+                      {{ market_place.payment_method }} |
+                      {{ currentUser.currency_id == 2 ? "R" : "$"
+                      }}{{ market_place.amount }}
                       | Balance:
                       <span :class="{ 'text-red': market_place.balance == 0 }"
-                        >{{ currentUser.currency_id == 2 ? "R" : "$"
-                    }} {{ market_place.balance }}</span
+                        >{{ currentUser.currency_id == 2 ? "R" : "$" }}
+                        {{ market_place.balance }}</span
                       >
                     </span>
-                    <span class="description">Time Placed - 7:30 PM Today</span>
+                    <span class="description"
+                      >Time Placed -
+                      {{
+                        market_place.created_at
+                          | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                      }}</span
+                    >
                   </div>
                   <!-- /.user-block -->
                   <div class="card-tools">
@@ -96,15 +101,17 @@
                             alt="User Image"
                           />
                           <span class="username">
-                            {{ pending_payment.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
-                    }}{{
-                              pending_payment.amount
-                            }}
+                            {{ pending_payment.payment_method }} |
+                            {{ currentUser.currency_id == 2 ? "R" : "$"
+                            }}{{ pending_payment.amount }}
                             | Received
                             <i class="fas fa-check-circle"></i>
                           </span>
                           <span class="description"
-                            >Time Paid - 7:30 PM Today</span
+                            >Time Paid - {{
+                        pending_payment.market_place_date
+                          | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                      }}</span
                           >
                         </div>
                         <!-- /.user-block -->
@@ -123,15 +130,17 @@
                             alt="User Image"
                           />
                           <span class="username">
-                            {{ pending_payment.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
-                    }}{{
-                              pending_payment.amount
-                            }}
+                            {{ pending_payment.payment_method }} |
+                            {{ currentUser.currency_id == 2 ? "R" : "$"
+                            }}{{ pending_payment.amount }}
                             | Paid
                             <i class="fas fa-check-circle"></i>
                           </span>
                           <span class="description"
-                            >Time Placed - 7:30 PM Today</span
+                            >Time Placed - {{
+                        pending_payment.market_place_date
+                          | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                      }}</span
                           >
                         </div>
                         <!-- /.user-block -->
@@ -193,13 +202,15 @@
                             alt="User Image"
                           />
                           <span class="username">
-                            {{ pending_payment.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
-                    }}{{
-                              pending_payment.amount
-                            }}
+                            {{ pending_payment.payment_method }} |
+                            {{ currentUser.currency_id == 2 ? "R" : "$"
+                            }}{{ pending_payment.amount }}
                           </span>
                           <span class="description"
-                            >Time Placed - 7:30 PM Today</span
+                            >Time Placed - {{
+                        pending_payment.market_place_date
+                          | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                      }}</span
                           >
                         </div>
                         <!-- /.user-block -->
