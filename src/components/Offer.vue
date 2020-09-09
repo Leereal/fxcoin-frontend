@@ -26,7 +26,7 @@
       <div class="card card-solid">
         <div class="card-body pb-0">
           <div v-if="offers.length == 0" class="alert alert-primary">
-            Oops! It looks like you paid all your offers. There is nothing to
+            It looks like you paid all your offers. There is nothing to
             pay here. Wait for Market Place to Open and then place your Offer.
           </div>
           <div class="row col-lg-6">
@@ -45,10 +45,15 @@
                         alt="User Image"
                       />
                       <span class="username">
-                        {{ offer.payment_method }} | ${{ offer.amount }}
+                        {{ offer.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{ offer.amount }}
                       </span>
                       <span class="description"
-                        >Time Placed - 7:30 PM Today
+                        >Time Placed - 
+                      {{
+                        offer.offer_time
+                          | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                      }}
                       </span>
                     </div>
                     <!-- /.user-block -->
@@ -64,16 +69,37 @@
                     <!-- /.card-tools -->
                   </div>
                   <!-- /.card-header -->
-                  <div class="card-body text-center" style="display: none;">
+                  <div class="card-body text-left" style="display: none;">
                     <div class="row">
                       <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li>
+                            <span class="fa-li"
+                              ><i class="fas fa-piggy-bank"></i
+                            ></span>
+                            Account Holder Name: {{ offer.account_holder }}
+                          </li>
+                          <hr>  
                           <li>
                             <span class="fa-li"
                               ><i class="fas fa-piggy-bank"></i
                             ></span>
-                            Account Number: {{ offer.account_to_pay }}
+                            Account: {{ offer.account_to_pay }}
                           </li>
                           <hr>                          
+                          <li  v-if="currentUser.currency_id == 2">
+                            <span class="fa-li"
+                              ><i class="fas fa-lg fa-phone"></i
+                            ></span>
+                            Branch: {{ offer.branch }}
+                          </li>
+                          <hr  v-if="currentUser.currency_id == 2">                          
+                          <li  v-if="currentUser.currency_id == 2">
+                            <span class="fa-li"
+                              ><i class="fas fa-lg fa-phone"></i
+                            ></span>
+                            Account Type: {{ offer.account_type }}
+                          </li>
+                          <hr  v-if="currentUser.currency_id == 2">                          
                           <li>
                             <span class="fa-li"
                               ><i class="fas fa-lg fa-phone"></i
@@ -241,6 +267,11 @@ export default {
             title: "Error",
             message: "Please check if the offer still exists or try again",
           });
+    },
+  },
+  computed: {
+    currentUser() {
+      return this.$store.getters.currentUser;
     },
   },
   mounted() {

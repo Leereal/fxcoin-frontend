@@ -246,7 +246,7 @@
         <div class="modal-content bg-primary">
           <div class="modal-header">
             <h5 class="modal-title" id="depositModalTitle">
-              Make Your Offer
+              Buy Points From System | Pool Plans Only
             </h5>
             <button
               type="button"

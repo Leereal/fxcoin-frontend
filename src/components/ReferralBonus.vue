@@ -78,7 +78,7 @@
                     </td>
                     <td>{{ referral_bonus.referral }}</td>
                     <td>{{ referral_bonus.package }}</td>
-                    <td>${{ referral_bonus.amount }}</td>
+                    <td>{{currentUser.currency_id==2 ? 'R' : '$'}}{{ referral_bonus.amount }}</td>
                   </tr>
                 </tbody>
                 <tfoot>

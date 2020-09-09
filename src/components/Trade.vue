@@ -53,12 +53,14 @@
                       alt="User Image"
                     />
                     <span class="username">
-                      {{ market_place.payment_method }} | ${{
+                      {{ market_place.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{
                         market_place.amount
                       }}
                       | Balance:
                       <span :class="{ 'text-red': market_place.balance == 0 }"
-                        >$ {{ market_place.balance }}</span
+                        >{{ currentUser.currency_id == 2 ? "R" : "$"
+                    }} {{ market_place.balance }}</span
                       >
                     </span>
                     <span class="description">Time Placed - 7:30 PM Today</span>
@@ -94,7 +96,8 @@
                             alt="User Image"
                           />
                           <span class="username">
-                            {{ pending_payment.payment_method }} | ${{
+                            {{ pending_payment.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{
                               pending_payment.amount
                             }}
                             | Received
@@ -120,7 +123,8 @@
                             alt="User Image"
                           />
                           <span class="username">
-                            {{ pending_payment.payment_method }} | ${{
+                            {{ pending_payment.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{
                               pending_payment.amount
                             }}
                             | Paid
@@ -189,7 +193,8 @@
                             alt="User Image"
                           />
                           <span class="username">
-                            {{ pending_payment.payment_method }} | ${{
+                            {{ pending_payment.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{
                               pending_payment.amount
                             }}
                           </span>

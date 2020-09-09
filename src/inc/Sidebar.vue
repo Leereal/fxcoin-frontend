@@ -61,6 +61,15 @@
             </router-link>
           </li>
           <li class="nav-item">
+            <router-link to="/offers" class="nav-link">
+              <i class="nav-icon fas fa-gift text-red"></i>
+              <p>
+                My Offers
+              </p>
+              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
+            </router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="/trade" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart text-green"></i>
               <p>
@@ -77,37 +86,28 @@
               </p>
               <!-- <span class="right badge badge-danger">Coming Soon</span> -->
             </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/offers" class="nav-link">
-              <i class="nav-icon fas fa-gift text-red"></i>
-              <p>
-                Offers
-              </p>
-              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/profile" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Profile
-              </p>
-            </router-link>
-          </li>
+          </li>  
           <li class="nav-item">
             <router-link to="/user-payment-details" class="nav-link">
               <i class="nav-icon fas fa-info-circle text-blue"></i>
               <p>
-                Payment Details
+              Banking/Payment Details
               </p>
             </router-link>
-          </li>
+          </li>        
+          <li class="nav-item">
+            <router-link to="/profile" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                My Profile
+              </p>
+            </router-link>
+          </li>          
           <li class="nav-item">
             <router-link to="/referrals" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Referrals
+                My Referrals
               </p>
             </router-link>
           </li>
@@ -115,7 +115,7 @@
             <router-link to="/referral-bonus" class="nav-link">
               <i class="nav-icon fas fa-gift"></i>
               <p>
-                Referrals Bonus
+                My Referrals Bonus
               </p>
               <!-- <span class="right badge badge-danger">Coming Soon</span> -->
             </router-link>

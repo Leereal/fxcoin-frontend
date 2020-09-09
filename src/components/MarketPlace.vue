@@ -28,17 +28,31 @@
           <h5>Points on Sale</h5>
         </div>
         <div class="card-body pb-0">
-          <div
+          <div v-if="!market_places.length" class="alert" role="alert">
+            <div class="col-12 text-center text-danger">
+              <h4>Market Place Launch</h4>
+              <Countdown
+                end="2020-09-10 10:00:00"
+                showDays
+                showHours
+                showMinutes
+                showSeconds
+              ></Countdown>
+              <h4 class="text-center text-primary">
+                {{ new Date("2020-09-10 10:00:00") }}
+              </h4>
+              <p>
+                Market Place is for those who want to participate in Peer to
+                Peer Investment Plans. If you want to purchase points for Pool
+                Plans you do not have to wait for Market Place to open. Click on
+                Buy Points from System and make your payment then submit POP.
+              </p>
+            </div>
+            <!-- <div
             v-if="!market_places.length"
             class="alert alert-success"
             role="alert"
-          >
-            Please note that for the first week you can only buy points from the
-            system through Buy Points from System since there is no one to directly buy
-            the coins from. It is only after their maturity after 7 days that
-            these points will be sold on the market place that the Market Place
-            will be able to be opened for everyone to make their open bids from
-            there. 
+          > -->
             <!-- Market Place is closed at the moment. Opening times are 4 AM, 10 AM,
             4 PM and 10 PM (GMT) -->
           </div>
@@ -60,7 +74,8 @@
                         <b>{{ market_place.payment_method }}</b>
                       </h2>
                       <p class="text-muted text-sm">
-                        <b>Amount: </b> ${{ market_place.balance }}
+                        <b>Amount: </b> {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{ market_place.balance }}
                       </p>
                     </div>
                     <div class="col-4 text-center">
@@ -92,7 +107,7 @@
                   <div class="text-right">
                     <button
                       @click="fetchValue(market_place)"
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-block btn-primary"
                       data-toggle="modal"
                       data-target="#addModal"
                     >
@@ -152,7 +167,8 @@
                         </h2>
                         <hr />
                         <p class="text-muted text-sm">
-                          <b>Amount: </b> ${{ form.balance }} |<a
+                          <b>Amount: </b> {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{ form.balance }} |<a
                             href=""
                             @click.prevent="buyAll(form.balance)"
                           >
@@ -160,25 +176,13 @@
                           >
                         </p>
                         <hr />
-                        <ul class="ml-4 mb-0 fa-ul text-muted">
-                          <li>
-                            <span class="fa-li"
-                              ><i class="fas fa-piggy-bank"></i
-                            ></span>
-                            Account Number: ######
-                          </li>
+                        <ul class="ml-4 mb-0 fa-ul text-muted">                         
                           <li>
                             <span class="fa-li"
                               ><i class="fa fa-flag"></i
                             ></span>
                             Country: {{ form.country }}
-                          </li>
-                          <li>
-                            <span class="fa-li"
-                              ><i class="fas fa-lg fa-phone"></i
-                            ></span>
-                            Phone #: ######
-                          </li>
+                          </li>                          
                         </ul>
                       </div>
                       <div class="col-5 text-center">
@@ -288,7 +292,9 @@
 </template>
 
 <script>
+import Countdown from "countdown-vue";
 export default {
+  components: { Countdown },
   data() {
     return {
       form: new Form({
@@ -305,13 +311,23 @@ export default {
         comment: "",
         avatar: "",
       }),
+      market_places: [],
     };
-  },
-  created() {
-    //this.fetchValues();
-    //this.fetchPackages();
+  },  
+  created() {   
+    this.fetchValues();   
   },
   methods: {
+    fetchValues() {
+      axios
+        .get("/api/market-place") //calling the api url for packages data
+        .then((response) => {
+          this.market_places = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     fetchValue(form) {
       this.form.market_place_id = form.id;
       this.form.transaction_code = form.transaction_code;
@@ -325,6 +341,11 @@ export default {
       this.form.package_id = "";
       this.form.comment = "";
     },
+    listen() {
+      Echo.channel("marketplaces").listen("MarketPlaceEvent", () => {
+        this.fetchValues();
+      });
+    },
     //---AddValue Function--//
     addValue() {
       this.form
@@ -336,7 +357,7 @@ export default {
             title: "Succefully Saved",
             message: "Offer Successfully Placed, Pay within 12 hours",
           });
-          this.$store.dispatch("getMarketPlaces");
+          this.fetchValues();
           $("#addModal").modal("hide");
         })
         .catch(function(error) {
@@ -350,7 +371,7 @@ export default {
     },
     buyAll(amount) {
       this.form.amount = amount;
-    },
+    },   
   },
   computed: {
     market_places() {
@@ -358,6 +379,9 @@ export default {
     },
     peer_packages() {
       return this.$store.getters.peer_packages;
+    },
+    currentUser() {
+      return this.$store.getters.currentUser;
     },
   },
   mounted() {
@@ -367,7 +391,7 @@ export default {
     if (this.peer_packages.length) {
       return;
     }
-    this.$store.dispatch("getMarketPlaces");
+    // this.$store.dispatch("getMarketPlaces");
     this.$store.dispatch("getPeerPackages");
   },
 };

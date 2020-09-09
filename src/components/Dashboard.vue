@@ -52,7 +52,10 @@
         </div>
         <div class="row mt-3">
           <div class="col-sm-12">
-            <p>*Please use your short link to market on Facebook. If short link is blank contact support</p>
+            <p>
+              *Please use your short link to market on Facebook. If short link
+              is blank contact support
+            </p>
             <div class="input-group">
               <div class="input-group-append">
                 <div class="input-group-text">
@@ -79,6 +82,27 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-12 text-center text-danger">
+              <h4>Market Place Launch</h4>
+              <Countdown
+                end="2020-09-10 10:00:00"
+                showDays
+                showHours
+                showMinutes
+                showSeconds
+              ></Countdown>
+              <h4 class="text-center text-primary">
+                {{ new Date("2020-09-10 10:00:00") }}
+              </h4>
+              <p>
+                Market Place is for those who want to participate in Peer to
+                Peer Investment Plans. If you want to purchase points for Pool
+                Plans you do not have to wait for Market Place to open. Click on
+                Buy Points from System and make your payment then submit POP.
+              </p>
+            </div>          
+        </div>
         <div class="row mt-3">
           <div class="col-lg-3 col-12">
             <router-link to="/trade">
@@ -89,7 +113,10 @@
                     {{ totals.payment }}
                     <sup style="font-size: 15px">points</sup>
                   </h3>
-                  <p>Withdrawals: {{currentUser.currency_id==2 ? 'R' : '$'}}{{ totals.payment }}</p>
+                  <p>
+                    Withdrawals: {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{ totals.payment }}
+                  </p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -107,10 +134,13 @@
               <div class="small-box bg-success">
                 <div class="inner">
                   <h3>
-                    {{ totals.balance
-                    }} <sup style="font-size: 15px">points</sup>
+                    {{ totals.balance }}
+                    <sup style="font-size: 15px">points</sup>
                   </h3>
-                  <p>Balance: {{currentUser.currency_id==2 ? 'R' : '$'}}{{ totals.balance }}</p> 
+                  <p>
+                    Balance: {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{ totals.balance }}
+                  </p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -151,7 +181,11 @@
                     <sup style="font-size: 15px">points</sup>
                   </h3>
 
-                  <p>Referral Bonus : {{currentUser.currency_id==2 ? 'R' : '$'}}{{ totals.referral_bonus }}</p>
+                  <p>
+                    Referral Bonus :
+                    {{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{ totals.referral_bonus }}
+                  </p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
@@ -260,33 +294,51 @@
                     data-card-widget="collapse"
                   >
                     <i class="fas fa-minus"></i>
-                  </button>                  
+                  </button>
                 </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
                 <ul class="products-list product-list-in-card pl-2 pr-2">
-                  <li class="item" v-for="investment in investments.slice(0,4)" :key="investment.id">
+                  <li
+                    class="item"
+                    v-for="investment in investments.slice(0, 4)"
+                    :key="investment.id"
+                  >
                     <div class="product-img">
                       <img
-                       :src="[investment.status!=1 ? require('../assets/pending.png') : require('../assets/success.png')]"                     
+                        :src="[
+                          investment.status != 1
+                            ? require('../assets/pending.png')
+                            : require('../assets/success.png'),
+                        ]"
                         alt="Status"
                         class="img-size-50"
                       />
                     </div>
                     <div class="product-info">
                       <a href="javascript:void(0)" class="product-title"
-                        >{{investment.package}}
-                        <span class="float-right"
-                        :class="[investment.status!=1 ? ' badge badge-primary' :'badge badge-success']"
-                          >{{currentUser.currency_id==2 ? 'R' : '$'}}{{investment.balance}}</span
+                        >{{ investment.package }}
+                        <span
+                          class="float-right"
+                          :class="[
+                            investment.status != 1
+                              ? ' badge badge-primary'
+                              : 'badge badge-success',
+                          ]"
+                          >{{ currentUser.currency_id == 2 ? "R" : "$"
+                          }}{{ investment.balance }}</span
                         ></a
                       >
                       <span class="product-description">
-                       Maturity Date is {{investment.due_date | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
+                        Maturity Date is
+                        {{
+                          investment.due_date
+                            | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                        }}
                       </span>
                     </div>
-                  </li>                 
+                  </li>
                 </ul>
               </div>
               <!-- /.card-body -->
@@ -370,15 +422,15 @@
 </template>
 
 <script>
+import Countdown from 'countdown-vue'
 export default {
+  components: { Countdown },
   data() {
-    return {
-
-    };
+    return {};
   },
   created() {
     this.fetchValues();
-     if (this.totals.length) {
+    if (this.totals.length) {
       return;
     }
     if (this.investments.length) {
@@ -387,7 +439,7 @@ export default {
     this.$store.dispatch("getTotals");
     this.$store.dispatch("getInvestments");
   },
-  methods: { 
+  methods: {
     //---FetchValues Function--//
     fetchValues() {
       axios
@@ -432,9 +484,7 @@ export default {
       }
     },
   },
-  mounted() {
-   
-  },
+  mounted() {},
   computed: {
     currentUser() {
       return this.$store.getters.currentUser;
@@ -444,14 +494,14 @@ export default {
     },
     investments() {
       return this.$store.getters.investments;
-    }, 
+    },
     referralLink() {
       return (
         this.$ipAdr +
         "/register?ref=" +
         this.$store.getters.currentUser.username
       );
-    },    
+    },
   },
 };
 </script>
@@ -479,7 +529,7 @@ export default {
   background-color: #3b5998;
   color: white;
 }
-.fab{
-  color:white;
+.fab {
+  color: white;
 }
 </style>

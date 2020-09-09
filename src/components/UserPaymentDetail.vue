@@ -54,10 +54,16 @@
                 <th v-if="currentUser.currency_id == 2" scope="col">Branch</th>
                 <th scope="col">Account Name Holder</th>
                 <th scope="col">Account Number</th>
+                <th v-if="currentUser.currency_id == 2" scope="col">Account Type</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
+              <tr v-if="payment_details==''">
+                <td colspan="6" class="text-center">
+                  Please enter your payment details in order for you to transact
+                </td>
+              </tr>
               <tr
                 v-for="payment_detail in payment_details"
                 v-bind:key="payment_detail.id"
@@ -75,6 +81,9 @@
                 </td>
                 <td>{{ payment_detail.account_holder }}</td>
                 <td>{{ payment_detail.account_number }}</td>
+                <td v-if="currentUser.currency_id == 2">
+                  {{ payment_detail.account_type }}
+                </td>
                 <td>
                   <span data-toggle="modal" data-target="#addModal">
                     <button
@@ -164,6 +173,25 @@
                 />
                 <has-error :form="form" field="branch"></has-error>
               </div>
+              <div v-if="currentUser.currency_id == 2" class="form-group">
+                <label for="branch">Account Type</label>
+                <select               
+                  class="form-control"
+                  id="account_type"
+                  v-model="form.account_type"
+                  name="account_type"
+                  :class="{
+                    'is-invalid': form.errors.has('account_type'),
+                  }"
+                >
+                 <option value="">Select Bank</option>
+                 <option value="Cheque">Cheque</option>
+                 <option value="Savings">Savings</option>
+                 <option value="Current">Current</option>
+                 <option value="Investment">Investment</option>
+                </select>
+                <has-error :form="form" field="account_type"></has-error>
+              </div>
               <div class="form-group">
                 <label for="account_holder">Account Name Holder</label>
                 <input
@@ -223,6 +251,7 @@ export default {
         payment_method: "",
         account_number: "",
         account_holder: "",
+        account_type:"",
         branch: "",
       }),
       pm_id: "",
@@ -289,6 +318,7 @@ export default {
       this.form.id = form.id;
       this.form.account_number = form.account_number;
       this.form.account_holder = form.account_holder;
+      this.form.account_type = form.account_type;
       this.form.branch = form.branch;
       this.p_m = form.payment_method;
       this.modalTitle = "Edit Payment Details";
