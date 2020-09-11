@@ -151,7 +151,7 @@
 
                   <!-- /.card-footer -->
                   <div class="card-footer" style="display: none;">
-                    <button class="btn btn-outline-danger float-left">
+                    <button class="btn btn-outline-danger float-left" disabled>
                       Cancel Offer <i class="fas fa-times-circle"></i>
                     </button>
                     <button

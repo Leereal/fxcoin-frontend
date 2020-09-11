@@ -28,18 +28,18 @@
           <h5>Points on Sale</h5>
         </div>
         <div class="card-body pb-0">
-          <div v-if="!market_places.length" class="alert" role="alert">
+          <div v-if="status == 'Closed'" class="alert" role="alert">           
             <div class="col-12 text-center text-danger">
-              <h4>Market Place Launch</h4>
+              <h4>Market Opens in </h4>
               <Countdown
-                end="2020-09-10 10:00:00"
+                :end="nextMarket"
                 showDays
                 showHours
                 showMinutes
                 showSeconds
               ></Countdown>
               <h4 class="text-center text-primary">
-                {{ new Date("2020-09-10 10:00:00") }}
+                {{ new Date(nextMarket) }}
               </h4>
               <p>
                 Market Place is for those who want to participate in Peer to
@@ -47,15 +47,15 @@
                 Plans you do not have to wait for Market Place to open. Click on
                 Buy Points from System and make your payment then submit POP.
               </p>
-            </div>
-            <!-- <div
-            v-if="!market_places.length"
-            class="alert alert-success"
-            role="alert"
-          > -->
-            <!-- Market Place is closed at the moment. Opening times are 4 AM, 10 AM,
-            4 PM and 10 PM (GMT) -->
+            </div>             
           </div>
+          <div v-else-if="status == 'Finished'" class="alert" role="alert">
+            <div class="col-12 text-center text-primary">
+              <h4>Points Finished</h4>              
+              <h5>Sorry No more points left for sell. Please check when next Market open</h5>
+            </div>            
+          </div>
+
           <div v-else class="row d-flex align-items-stretch">
             <!-- Start Card for Offers -->
             <div
@@ -65,7 +65,7 @@
             >
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
-                  OFFER ID: {{ market_place.transaction_code }}
+                   ID: {{ market_place.transaction_code }}
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
@@ -74,8 +74,9 @@
                         <b>{{ market_place.payment_method }}</b>
                       </h2>
                       <p class="text-muted text-sm">
-                        <b>Amount: </b> {{ currentUser.currency_id == 2 ? "R" : "$"
-                    }}{{ market_place.balance }}
+                        <b>Amount: </b>
+                        {{ currentUser.currency_id == 2 ? "R" : "$"
+                        }}{{ market_place.balance }}
                       </p>
                     </div>
                     <div class="col-4 text-center">
@@ -157,7 +158,7 @@
               <div class="d-flex align-items-stretch">
                 <div class="card bg-light">
                   <div class="card-header text-muted border-bottom-0">
-                    OFFER ID: {{ form.transaction_code }}
+                    ID: {{ form.transaction_code }}
                   </div>
                   <div class="card-body pt-0">
                     <div class="row">
@@ -167,8 +168,9 @@
                         </h2>
                         <hr />
                         <p class="text-muted text-sm">
-                          <b>Amount: </b> {{ currentUser.currency_id == 2 ? "R" : "$"
-                    }}{{ form.balance }} |<a
+                          <b>Amount: </b>
+                          {{ currentUser.currency_id == 2 ? "R" : "$"
+                          }}{{ form.balance }} |<a
                             href=""
                             @click.prevent="buyAll(form.balance)"
                           >
@@ -176,13 +178,13 @@
                           >
                         </p>
                         <hr />
-                        <ul class="ml-4 mb-0 fa-ul text-muted">                         
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
                           <li>
                             <span class="fa-li"
                               ><i class="fa fa-flag"></i
                             ></span>
                             Country: {{ form.country }}
-                          </li>                          
+                          </li>
                         </ul>
                       </div>
                       <div class="col-5 text-center">
@@ -222,6 +224,9 @@
                           type="radio"
                           :value="peer_package.id"
                           v-model="form.package_id"
+                          :class="{
+                            'is-invalid': form.errors.has('package_id'),
+                          }"
                           :id="'radio' + peer_package.id"
                         />
                         <label class="form-check-label"
@@ -232,6 +237,7 @@
                           days</label
                         >
                       </div>
+                      <has-error :form="form" field="package_id"></has-error>
                     </div>
                     <hr />
                     <div class="card  collapsed-card">
@@ -280,7 +286,7 @@
                 Close
               </button>
               <button type="submit" class="btn btn-outline-light">
-                Save
+                Buy Now
               </button>
             </div>
           </form>
@@ -312,20 +318,24 @@ export default {
         avatar: "",
       }),
       market_places: [],
+      status: "",
+      error_log: "",
     };
-  },  
-  created() {   
-    this.fetchValues();   
   },
-  methods: {
+  created() {
+    this.fetchValues();
+  },
+  methods: {    
     fetchValues() {
       axios
         .get("/api/market-place") //calling the api url for packages data
         .then((response) => {
           this.market_places = response.data.data;
+          this.status = response.data.status;
+          console.log(response.data.status);
         })
         .catch(function(error) {
-          console.log(error);
+          this.error_log = error;
         });
     },
     fetchValue(form) {
@@ -340,11 +350,6 @@ export default {
       this.form.amount = "";
       this.form.package_id = "";
       this.form.comment = "";
-    },
-    listen() {
-      Echo.channel("marketplaces").listen("MarketPlaceEvent", () => {
-        this.fetchValues();
-      });
     },
     //---AddValue Function--//
     addValue() {
@@ -371,27 +376,26 @@ export default {
     },
     buyAll(amount) {
       this.form.amount = amount;
-    },   
+    },
   },
   computed: {
-    market_places() {
-      return this.$store.getters.market_places;
-    },
     peer_packages() {
       return this.$store.getters.peer_packages;
     },
     currentUser() {
       return this.$store.getters.currentUser;
     },
+    nextMarket(){
+      
+      var morning_session = "2020-09-11 10:00:00";
+      var afternoon_session = "2020-09-11 21:00:00"; 
+      return morning_session;
+    }
   },
   mounted() {
-    if (this.market_places.length) {
-      return;
-    }
     if (this.peer_packages.length) {
       return;
     }
-    // this.$store.dispatch("getMarketPlaces");
     this.$store.dispatch("getPeerPackages");
   },
 };

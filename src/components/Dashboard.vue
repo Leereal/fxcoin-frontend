@@ -81,28 +81,7 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-12 text-center text-danger">
-              <h4>Market Place Launch</h4>
-              <Countdown
-                end="2020-09-10 10:00:00"
-                showDays
-                showHours
-                showMinutes
-                showSeconds
-              ></Countdown>
-              <h4 class="text-center text-primary">
-                {{ new Date("2020-09-10 10:00:00") }}
-              </h4>
-              <p>
-                Market Place is for those who want to participate in Peer to
-                Peer Investment Plans. If you want to purchase points for Pool
-                Plans you do not have to wait for Market Place to open. Click on
-                Buy Points from System and make your payment then submit POP.
-              </p>
-            </div>          
-        </div>
+        </div>        
         <div class="row mt-3">
           <div class="col-lg-3 col-12">
             <router-link to="/trade">

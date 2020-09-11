@@ -269,7 +269,7 @@ export default {
     addValue() {
       this.form.referrer_id = this.ref.id;
       this.form.post("/api/register").then((data) => {
-        Swal.fire("Registration Successful", "Check your email and verify registration", "success");
+        Swal.fire("Registration Successful", "You can login now", "success");
         this.$router.push({ name: "login" });
       }).catch(function(error) {
           Swal.fire({

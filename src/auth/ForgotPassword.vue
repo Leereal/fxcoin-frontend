@@ -67,16 +67,17 @@ export default {
         this.flashMessage.setStrategy("single");
         this.flashMessage.success({
           title: "Message Sent",
-          message: "Password Reset link sent to your email. Login to your email and click it to rest your password",
+          message: "Password Reset link sent to your email. Login to your email, check your spam folder and get your temporary password",
         });
-      }),
-        (err) =>
+      })
+      .catch(function(error) {
           Swal.fire({
             icon: "error",
             title: "Failed!",
             text: "Please try again or refresh page",
             footer: "Contact Support if you need help",
           });
+        });  
     },
   },  
 };

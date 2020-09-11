@@ -184,7 +184,7 @@
                     'is-invalid': form.errors.has('account_type'),
                   }"
                 >
-                 <option value="">Select Bank</option>
+                 <option value="">Select Account Type</option>
                  <option value="Cheque">Cheque</option>
                  <option value="Savings">Savings</option>
                  <option value="Current">Current</option>
