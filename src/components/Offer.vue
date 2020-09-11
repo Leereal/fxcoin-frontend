@@ -25,15 +25,32 @@
       <!-- Default box -->
       <div class="card card-solid">
         <div class="card-body pb-0">
-          <div v-if="offers.length == 0" class="alert alert-primary">
-            It looks like you paid all your offers. There is nothing to
-            pay here. Wait for Market Place to Open and then place your Offer.
+          <div  v-if="alloffers" class="row d-flex align-items-stretch">
+          <div v-for="alloffer in alloffers" :key="alloffer.id" class="info-box bg-warning col-12 col-sm-6 col-md-6 d-flex align-items-stretch ">
+            <span class="info-box-icon"
+              ><i class="fas fa-spinner fa-pulse"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-number"
+                >You paid <span class="text-success">{{ currentUser.currency_id == 2 ? "R" : "$"}}{{alloffer.amount}}</span> waiting for approval</span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description inline-block">
+                Please be patient
+              </span>
+            </div>
           </div>
-          <div class="row col-lg-6">
+          </div>
+          <div v-if="offers.length == 0" class="alert alert-primary">
+            It looks like you paid all your offers. There is nothing to pay
+            here. Wait for Market Place to Open and then place your Offer.
+          </div>
+          <div class="row col-12 col-lg-8">
             <div class="card-body pt-0">
               <form>
                 <div
                   class="card card-widget collapsed-card"
+                  style="display:block"
                   v-for="offer in offers"
                   v-bind:key="offer.id"
                 >
@@ -45,15 +62,16 @@
                         alt="User Image"
                       />
                       <span class="username">
-                        {{ offer.payment_method }} | {{ currentUser.currency_id == 2 ? "R" : "$"
-                    }}{{ offer.amount }}
+                        {{ offer.payment_method }} |
+                        {{ currentUser.currency_id == 2 ? "R" : "$"
+                        }}{{ offer.amount }} | <span class="text-danger">Please pay. Click +</span>
                       </span>
                       <span class="description"
-                        >Time Placed - 
-                      {{
-                        offer.offer_time
-                          | moment("dddd, MMMM Do YYYY, h:mm:ss a")
-                      }}
+                        >Time Placed -
+                        {{
+                          offer.offer_time
+                            | moment("dddd, MMMM Do YYYY, h:mm:ss a")
+                        }}
                       </span>
                     </div>
                     <!-- /.user-block -->
@@ -73,42 +91,42 @@
                     <div class="row">
                       <ul class="ml-4 mb-0 fa-ul text-muted">
                         <li>
-                            <span class="fa-li"
-                              ><i class="fas fa-piggy-bank"></i
-                            ></span>
-                            Account Holder Name: {{ offer.account_holder }}
-                          </li>
-                          <hr>  
-                          <li>
-                            <span class="fa-li"
-                              ><i class="fas fa-piggy-bank"></i
-                            ></span>
-                            Account: {{ offer.account_to_pay }}
-                          </li>
-                          <hr>                          
-                          <li  v-if="currentUser.currency_id == 2">
-                            <span class="fa-li"
-                              ><i class="fas fa-lg fa-phone"></i
-                            ></span>
-                            Branch: {{ offer.branch }}
-                          </li>
-                          <hr  v-if="currentUser.currency_id == 2">                          
-                          <li  v-if="currentUser.currency_id == 2">
-                            <span class="fa-li"
-                              ><i class="fas fa-lg fa-phone"></i
-                            ></span>
-                            Account Type: {{ offer.account_type }}
-                          </li>
-                          <hr  v-if="currentUser.currency_id == 2">                          
-                          <li>
-                            <span class="fa-li"
-                              ><i class="fas fa-lg fa-phone"></i
-                            ></span>
-                            Phone #: {{ offer.cellphone }}
-                          </li>
-                        </ul>
+                          <span class="fa-li"
+                            ><i class="fas fa-piggy-bank"></i
+                          ></span>
+                          Account Holder Name: {{ offer.account_holder }}
+                        </li>
+                        <hr />
+                        <li>
+                          <span class="fa-li"
+                            ><i class="fas fa-piggy-bank"></i
+                          ></span>
+                          Account: {{ offer.account_to_pay }}
+                        </li>
+                        <hr />
+                        <li v-if="currentUser.currency_id == 2">
+                          <span class="fa-li"
+                            ><i class="fas fa-lg fa-phone"></i
+                          ></span>
+                          Branch: {{ offer.branch }}
+                        </li>
+                        <hr v-if="currentUser.currency_id == 2" />
+                        <li v-if="currentUser.currency_id == 2">
+                          <span class="fa-li"
+                            ><i class="fas fa-lg fa-phone"></i
+                          ></span>
+                          Account Type: {{ offer.account_type }}
+                        </li>
+                        <hr v-if="currentUser.currency_id == 2" />
+                        <li>
+                          <span class="fa-li"
+                            ><i class="fas fa-lg fa-phone"></i
+                          ></span>
+                          Phone #: {{ offer.cellphone }}
+                        </li>
+                      </ul>
                     </div>
-                    <hr>
+                    <hr />
                     <div class="row">
                       <div class="col-6">
                         <div class="imageView">
@@ -193,12 +211,14 @@ export default {
         id: "",
       }),
       offers: [],
+      alloffers: [],
       imageView: "",
       file: "",
     };
   },
   created() {
     this.fetchValues();
+    this.fetchAllOffers();
   },
   methods: {
     //Attach Image
@@ -208,7 +228,7 @@ export default {
       const reader = new FileReader();
       reader.readAsDataURL(image);
       if (image.type.match(pattern)) {
-        if (image["size"] < 4000000) {
+        if (image["size"] < 10000000) {
           reader.onload = (e) => {
             this.imageView = e.target.result;
             this.form.pop = this.imageView;
@@ -222,7 +242,7 @@ export default {
         }
       } else {
         this.flashMessage.error({
-          title: "Error",          
+          title: "Error",
           message: "File type is not an image. Please take a screenshot of POP",
         });
       }
@@ -233,6 +253,18 @@ export default {
         .get("/api/offers") //calling the api url for packages data
         .then((response) => {
           this.offers = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+
+    //---FetchValues Function--//
+    fetchAllOffers() {
+      axios
+        .get("/api/all-offers") //calling the api url for packages data
+        .then((response) => {
+          this.alloffers = response.data.data;
         })
         .catch(function(error) {
           console.log(error);
@@ -259,6 +291,7 @@ export default {
               message: "Payment Submitted",
             });
             this.fetchValues();
+            this.fetchAllOffers();
           });
         }
       }),

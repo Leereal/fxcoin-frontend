@@ -145,7 +145,8 @@
                     class="addfield"
                     href=""
                     @click.prevent="buyAll(tradeForm.balance)"
-                    >${{ tradeForm.balance }}</a
+                    >{{ currentUser.currency_id == 2 ? "R" : "$"
+                    }}{{ tradeForm.balance }}</a
                   >)</label
                 >
                 <input
@@ -443,8 +444,7 @@ export default {
         balance: "",
         payment_detail_id: "",
         comment: "",
-        reason: "",
-        due_date: "",
+        reason: "",       
       }),
       depositForm: new Form({
         amount: "",
@@ -522,8 +522,7 @@ export default {
 
     fetchValue(form) {
       this.tradeForm.investment_id = form.id;
-      this.tradeForm.balance = form.balance;
-      this.tradeForm.due_date = form.due_date;
+      this.tradeForm.balance = form.balance;     
     },
     //Deposit Function
     depositInvestment(){
@@ -573,12 +572,13 @@ export default {
             .then((data) => {
               this.flashMessage.setStrategy("single");
               this.flashMessage.success({
-                title: "Succefully Saved",
+                title: "Successfully Saved",
                 message: "Trade Created",
               });
               console.log(data);
               this.$store.dispatch("getInvestments");
               $("#addModal").modal("hide");
+              this.$router.push({ name: "trade" });
             })
             .catch(function(error) {
               Swal.fire({

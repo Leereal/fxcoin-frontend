@@ -243,14 +243,16 @@ export default {
             message: "Payment Received",
           });
           this.fetchValues();
+        }).catch(function(error) {
+          Swal.fire({
+            icon: "error",
+            title: "Failed!",
+            text: error.response.data.message,
+            footer: "Contact Support if you need help",
+          });
         });
         }
-      }),
-        (err) =>
-          this.flashMessage.error({
-            title: "Error",
-            message: "Please check if the offer still exists or try again",
-          });
+      })
     },
   },
   computed: {

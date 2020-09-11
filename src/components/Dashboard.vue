@@ -332,6 +332,18 @@
           <!-- /.col -->
 
           <div class="col-md-4">
+            <!-- Market Place opening times -->
+            <div class="info-box mb-3 bg-warning">
+              <router-link to="/market-place">
+              <span class="info-box-icon"><i class="fas fa-clock"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Market Place Opening Times</span>
+                <span class="info-box-number">10 AM and 9 PM</span>
+              </div>
+              </router-link>
+              <!-- /.info-box-content -->
+            </div>
             <!-- Info Boxes Style 2 -->
             <div class="info-box mb-3 bg-twitter">
               <a href="https://twitter.com/fx_auction">

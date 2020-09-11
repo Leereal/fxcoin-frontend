@@ -64,8 +64,7 @@
               v-bind:key="market_place.id"
             >
               <div class="card bg-light">
-                <div class="card-header text-muted border-bottom-0">
-                   ID: {{ market_place.transaction_code }}
+                <div class="card-header text-muted border-bottom-0">                 
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
@@ -94,13 +93,7 @@
                           ><i class="fas fa-lg fa-building"></i
                         ></span>
                         Country: {{ market_place.country }}
-                      </li>
-                      <li class="small font-weight-bold">
-                        <span class="fa-li"
-                          ><i class="fas fa-lg fa-phone"></i
-                        ></span>
-                        Phone #: #######
-                      </li>
+                      </li>                      
                     </ul>
                   </div>
                 </div>
@@ -157,8 +150,8 @@
               <!-- Start Card for Offers -->
               <div class="d-flex align-items-stretch">
                 <div class="card bg-light">
-                  <div class="card-header text-muted border-bottom-0">
-                    ID: {{ form.transaction_code }}
+                  <div class="card-header text-muted text-red border-bottom-0">
+                    Please do not make an offer if you can not pay in time. Thank you 
                   </div>
                   <div class="card-body pt-0">
                     <div class="row">
@@ -278,14 +271,10 @@
               <!-- End Card for Offers -->
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-outline-light"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-outline-light">
+              <div class="text-center">
+                
+              </div>             
+              <button type="submit" class="btn btn-outline-light btn-block">
                 Buy Now
               </button>
             </div>
@@ -364,6 +353,7 @@ export default {
           });
           this.fetchValues();
           $("#addModal").modal("hide");
+          this.$router.push({ name: "offers" });
         })
         .catch(function(error) {
           Swal.fire({
