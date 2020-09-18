@@ -215,6 +215,18 @@
                 </select>
                 <has-error :form="tradeForm" field="reason"></has-error>
               </div>
+              <div class="form-group" v-if="tradeForm.category=='Deposit'">
+                <label for="reason">Withdraw or Sell</label>
+                <select
+                  class="form-control"
+                  id="cat"
+                  v-model="cat"
+                  name="cat"                  
+                >                 
+                  <option value="Sell">Sell</option>
+                  <option value="Withdraw">Withdraw</option>
+                </select>             
+              </div>
             </div>
 
             <div class="modal-footer">
@@ -444,7 +456,8 @@ export default {
         balance: "",
         payment_detail_id: "",
         comment: "",
-        reason: "",       
+        reason: "",
+        category:""       
       }),
       depositForm: new Form({
         amount: "",
@@ -456,6 +469,7 @@ export default {
 
       payment_details: [],
       imageView: "",
+      cat:""
     };
   },
   created() {
@@ -522,7 +536,8 @@ export default {
 
     fetchValue(form) {
       this.tradeForm.investment_id = form.id;
-      this.tradeForm.balance = form.balance;     
+      this.tradeForm.balance = form.balance; 
+      this.tradeForm.category = form.category;     
     },
     //Deposit Function
     depositInvestment(){
@@ -556,6 +571,7 @@ export default {
       })
     },
     //---Add Trade Function--//
+    
     addTrade() {
       Swal.fire({
         title: "Are you sure?",
@@ -567,7 +583,31 @@ export default {
         confirmButtonText: "Yes, I do",
       }).then((result) => {
         if (result.value) {
-          this.tradeForm
+          if(this.cat=='Withdraw'){
+            this.tradeForm
+            .post("/api/withdrawal")
+            .then((data) => {
+              this.flashMessage.setStrategy("single");
+              this.flashMessage.success({
+                title: "Withdrawal Done",
+                message: "Withdrawal Takes up to 48 hours",
+              });
+              console.log(data);
+              this.$store.dispatch("getInvestments");
+              $("#addModal").modal("hide");
+              this.$router.push({ name: "withdrawals" });
+            })
+            .catch(function(error) {
+              Swal.fire({
+                icon: "error",
+                title: "Failed!",
+                text: error.response.data.message,
+                footer: "Contact Support if you need help",
+              });
+            });
+          }
+          else{
+            this.tradeForm
             .post("/api/market-place")
             .then((data) => {
               this.flashMessage.setStrategy("single");
@@ -588,6 +628,7 @@ export default {
                 footer: "Contact Support if you need help",
               });
             });
+          }          
         }
       });   
     },

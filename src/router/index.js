@@ -13,8 +13,11 @@ import ChangePassword from '../components/ChangePassword.vue';
 import PendingPayment from '../components/PendingPayment.vue';
 import Settings from '../components/Settings.vue';
 import Investment from '../components/Investment.vue';
+import Investments from '../components/Investments.vue';
+import Withdrawal from '../components/Withdrawal.vue';
 import Referral from '../components/Referral.vue';
 import ReferralBonus from '../components/ReferralBonus.vue';
+import Bids from '../components/Bids.vue';
 import Bonus from '../components/Bonus.vue';
 import Trade from '../components/Trade.vue';
 import Offer from '../components/Offer.vue';
@@ -62,6 +65,18 @@ const routes = [
     path: "/packages",
     name: "packages",
     component: Package,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/bids",
+    name: "bids",
+    component: Bids,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/all-investments",
+    name: "all-investments",
+    component: Investments,
     meta: { requiresAuth: true },
   },
   {
@@ -122,6 +137,12 @@ const routes = [
     path: "/investments",
     name: "investments",
     component: Investment,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/withdrawals",
+    name: "withdrawals",
+    component: Withdrawal,
     meta: { requiresAuth: true },
   },
   {

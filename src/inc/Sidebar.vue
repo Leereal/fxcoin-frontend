@@ -86,7 +86,16 @@
               </p>
               <!-- <span class="right badge badge-danger">Coming Soon</span> -->
             </router-link>
-          </li>  
+          </li>
+          <li class="nav-item">
+            <router-link to="/withdrawals" class="nav-link">
+              <i class=" nav-icon fas fa-wallet text-purple"></i>
+              <p>
+                My Withdrawals
+              </p>
+              <!-- <span class="right badge badge-danger">Coming Soon</span> -->
+            </router-link>
+          </li>   
           <li class="nav-item">
             <router-link to="/user-payment-details" class="nav-link">
               <i class="nav-icon fas fa-info-circle text-blue"></i>
@@ -136,6 +145,22 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul v-if="currentUser.id == 1" class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/bids" class="nav-link">
+                  <i class="fa fa-circle nav-icon"></i>
+                  <p>Bids</p>
+                </router-link>
+              </li>
+            </ul>
+            <ul v-if="currentUser.id == 1" class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/all-investments" class="nav-link">
+                  <i class="fa fa-circle nav-icon"></i>
+                  <p>Investments</p>
+                </router-link>
+              </li>
+            </ul>
             <ul v-if="currentUser.id == 1" class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/members" class="nav-link">

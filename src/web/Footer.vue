@@ -36,7 +36,7 @@
                                 <div class="footer_blog full white_fonts">
                              <h3>Contact us</h3>
                              <ul class="full">                               
-                               <li><img src="../assets/front/images/i6.png"><span>info@fxauction.com</span></li>                       
+                               <li><img src="../assets/front/images/i6.png"><span>info@fxauction.net</span></li>                       
                              </ul>
                          </div>
                             </div>

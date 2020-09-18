@@ -375,11 +375,51 @@ export default {
     currentUser() {
       return this.$store.getters.currentUser;
     },
-    nextMarket(){
-      
-      var morning_session = "2020-09-11 10:00:00";
-      var afternoon_session = "2020-09-11 21:00:00"; 
-      return morning_session;
+    nextMarket(){     
+      var d = new Date(),
+   month = '' + (d.getMonth() + 1),
+   day = '' + d.getDate(),
+   year = d.getFullYear();
+   
+   if (month.length < 2) month = '0' + month;
+   if (day.length < 2) day = '0' + day;
+   var today = [year, month, day].join('-');
+
+   var tmonth = Number(month);
+   var tday = Number(day)+ 1;
+
+   if ((Number(month) == 4 && Number(tday) == 31) || (Number(month) == 6 && Number(tday) == 31) || (Number(month) == 9 && Number(tday) == 31) || (Number(month) == 11 && Number(tday) == 31)) {
+        tday = '1';
+        tmonth = Number(month)+1;
+   }
+
+   if(Number(tday)==32) {
+        tday = '1';
+        tmonth = Number(month)+1;
+   }
+
+   if ((Number(month) == 2 && Number(day) > 28)) {
+        tday = '1';
+        tmonth = '3';   
+   }
+
+   if (Number(tmonth) < 10) tmonth = '0' + tmonth;
+   if (Number(tday)< 2) tday = '0' + tday;
+   var nextday = [year, tmonth, tday].join('-');
+
+
+   var dateOne = new Date(d.getFullYear(), d.getMonth(), d.getDate(), '10', '00', '00');
+   var dateTwo = new Date(d.getFullYear(), d.getMonth(), d.getDate(), '21', '00', '00');
+
+   if(d < dateOne){
+        return  today + ' ' + '10:00:00';
+   }
+   if((d > dateOne) && (d < dateTwo)){
+        return  today + ' ' + '21:00:00';;
+   }
+   if(d > dateTwo){
+        return  nextday + ' ' + '10:00:00';
+   }
     }
   },
   mounted() {

@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="card-body">
-          <table class="table table-striped">
+          <table class="table table-striped table-sm">
             <thead>
               <tr>
                 <th scope="col">Payment Method</th>

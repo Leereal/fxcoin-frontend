@@ -56,7 +56,29 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-              <table class="table table-bordered table-striped col-12">
+              <div class="row col-12">
+                <div class="col-12 col-md-6">
+                  <h3>
+                    Available bonus is
+                    <span class="text-success">{{ available_bonus }}</span>
+                    points
+                  </h3>
+                  <p>
+                    Minimum allowed withdrawal is 400 points if you are using
+                    ZAR account and 25 points if you are using USD account
+                  </p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <button
+                    class="btn  btn-block btn-success"
+                    data-toggle="modal"
+                    data-target="#addModal"
+                  >
+                    Sell Referral Bonus
+                  </button>
+                </div>
+              </div>
+              <table class="table table-bordered table-striped table-sm col-12">
                 <thead>
                   <tr>
                     <th>Date Received</th>
@@ -78,61 +100,92 @@
                     </td>
                     <td>{{ referral_bonus.referral }}</td>
                     <td>{{ referral_bonus.package }}</td>
-                    <td>{{currentUser.currency_id==2 ? 'R' : '$'}}{{ referral_bonus.amount }}</td>
+                    <td>
+                      {{ currentUser.currency_id == 2 ? "R" : "$"
+                      }}{{ referral_bonus.amount }}
+                    </td>
                   </tr>
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Date Received</th>
-                    <th>Username</th>
-                    <th>Package</th>
-                    <th>Amount</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
             <!-- /.card-body -->
           </div>
         </div>
         <!-- /.card-body -->
-        <div class="card-footer">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li
-                v-bind:class="[{ disabled: !pagination.prev_page_url }]"
-                class="page-item"
-              >
-                <a
-                  class="page-link"
-                  href="#"
-                  @click="fetchValues(pagination.prev_page_url)"
-                  >Previous</a
-                >
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link text-dark" href="#"
-                  >Page {{ pagination.current_page }} of
-                  {{ pagination.last_page }}</a
-                >
-              </li>
-              <li
-                v-bind:class="[{ disabled: !pagination.next_page_url }]"
-                class="page-item"
-              >
-                <a
-                  class="page-link"
-                  href="#"
-                  @click="fetchValues(pagination.next_page_url)"
-                  >Next</a
-                >
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <div class="card-footer"></div>
         <!-- /.card-footer-->
       </div>
       <!-- /.card -->
     </section>
+    <!-- Add Modal -->
+    <div
+      class="modal fade"
+      id="addModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addModalTitle"
+      aria-hidden="true"
+      ref="modal"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-primary">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalTitle">
+              Choose Payment Method
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form @submit.prevent="withdrawBonus" id="withdrawBonus">
+            <div class="modal-body">              
+             <div class="form-group">
+                <label for="payment_detail_id">Payment Method</label>
+                <select
+                  class="form-control"
+                  id="payment_detail_id"
+                  v-model="form.payment_detail_id"
+                  name="payment_detail_id"
+                  :class="{
+                    'is-invalid': form.errors.has('payment_detail_id'),
+                  }"
+                >
+                  <option value="">Select Payment Method</option>
+                  <option
+                    v-for="payment_detail in payment_details"
+                    v-bind:key="payment_detail.id"
+                    :value="payment_detail.id"
+                    >{{ payment_detail.payment_method }}</option
+                  >
+                </select>
+                <has-error
+                  :form="form"
+                  field="payment_detail_id"
+                ></has-error>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-light"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-outline-light">
+                Sell
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -142,12 +195,18 @@
 export default {
   data() {
     return {
+      form: new Form({
+        id: "",
+      }),
+      available_bonus: "",
       referral_bonuses: [],
-      pagination: {},
+      payment_details: [],
     };
   },
   created() {
+    this.getAvailableBonus();
     this.fetchValues(); //Calling function/method to output data after component created
+    this.fetchPaymentMethods();
   },
   computed: {
     currentUser() {
@@ -178,40 +237,73 @@ export default {
         alert("Oops, unable to copy");
       }
     },
-    //---Pagination Function--//
-    makePagination(meta, links) {
-      let pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev,
-      };
-      this.pagination = pagination;
-    },
-    //---End Pagination Function--//
     //---FetchValues Function--//
     fetchValues() {
-      let vm = this;
       axios
         .get("/api/user-referral-bonus") //calling the api url for packages data
         .then((response) => {
           this.referral_bonuses = response.data.data;
-          vm.makePagination(response.data.meta, response.data.links);
         })
         .catch(function(error) {
           console.log(error);
         });
     },
     //---End FetchValues Function--//
+    //---FetchValues Function--//
+    getAvailableBonus() {
+      axios
+        .get("/api/available-bonus") //calling the api url for packages data
+        .then((response) => {
+          this.available_bonus = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    //---End FetchValues Function--//
+     //---FetchPaymentMethods Function--//
+    fetchPaymentMethods() {
+      axios
+        .get("/api/user-payment-details") //calling the api url for PaymentMethods data
+        .then((response) => {
+          this.payment_details = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+     //---AddValue Function--//
+    withdrawBonus() {
+      this.form
+        .post("/api/bonus-withdrawal")
+        .then((data) => {
+          console.log(data);
+          this.flashMessage.setStrategy("single");
+          this.flashMessage.success({
+            title: "Successfully Done",
+            message: "You placed your bonus on Market Place",
+          });
+          this.fetchValues();
+          this.getAvailableBonus();
+          $("#addModal").modal("hide");
+      
+        })
+        .catch(function(error) {
+          Swal.fire({
+            icon: "error",
+            title: "Failed!",
+            text: error.response.data.message,
+            footer: "Contact Support if you need help",
+          });
+        });
+    },
   },
 };
 </script>
 <style scoped>
 @media (max-width: 576px) {
-  .card-body{
+  .card-body {
     font-size: 70%;
   }
-    
 }
 </style>
-
