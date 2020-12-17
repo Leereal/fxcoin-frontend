@@ -18,7 +18,7 @@
     "bootstrap": "^4.5.0",
     "core-js": "^3.6.5",
     "countdown-vue": "^1.1.5",
-    "datatables.net": "^1.10.21",
+    "datatables.net": "^1.10.22",
     "emoji-mart-vue": "^2.6.6",
     "laravel-echo": "^1.8.1",
     "moment": "^2.27.0",
