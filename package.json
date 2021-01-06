@@ -14,7 +14,7 @@
     "@smartweb/vue-flash-message": "^0.6.4",
     "@vuejs-community/vue-filter-date-parse": "^1.1.4",
     "admin-lte": "^3.0.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "core-js": "^3.6.5",
     "countdown-vue": "^1.1.5",
