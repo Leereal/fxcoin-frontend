@@ -21,7 +21,7 @@
     "datatables.net": "^1.10.21",
     "emoji-mart-vue": "^2.6.6",
     "laravel-echo": "^1.8.1",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "pusher-js": "^7.0.0",
     "sweetalert2": "^9.17.1",
     "v-money": "^0.8.1",
